@@ -1,0 +1,56 @@
+
+<h3>Customer List</h3>
+    <table  width="100%">
+
+        <thead>
+          <th>Id</th>
+          <th>Date of birth</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address</th>
+          <!--<th>Nationality</th>
+          <th>Father name</th>
+          <th>Mother name</th>
+          <th>Grand father name</th>
+          <th>citizenship number</th>
+          <th>Passport number</th>
+          <th>Image name</th>
+          <th>Customer Info Id</th>-->
+          <th>Branch</th>
+          <th>Branch Code</th>
+          <th>Customer added date</th>
+          <th>Customer updated date</th>
+          <th>Action</th>
+
+    
+        </thead>
+        <tr *ngFor="let customer of customers">
+            <td >{{customer.customerId}}</td>
+            <td >{{customer.dob}}</td>
+            <td >{{customer.name}}</td>
+            <td >{{customer.gender}}</td>
+            <td >{{customer.phone}}</td>
+            <td >{{customer.email}}</td>
+            <td >{{customer.address}}</td>
+            <!--<td >{{customer.nationality}}</td>
+            <td >{{customer.fatherName}}</td>
+            <td >{{customer.motherName}}</td>
+            <td >{{customer.grandFatherName}}</td>
+            <td >{{customer.citizenshipNumber}}</td>
+            <td >{{customer.passportNumber}}</td>
+            <td >{{customer.imageName}}</td>s
+            <td >{{customer.cifId}}</td> -->
+            <td >{{customer.branch}}</td>
+            <td >{{customer.branchCode}}</td>
+            <td >{{customer.customerAddedDate}}</td>
+            <td >{{customer.customerUpdatedDate}}</td>
+
+
+            <td ><button class="btn bg-success text-warning" routerLink="update-customer/{{customer.customerId}}">Edit</button><button class="btn bg-primary text-danger" (click)="deleteCustomer(customer.customerId)">Delete</button></td>
+        
+        </tr>
+
+      </table>
+      <router-outlet></router-outlet>
