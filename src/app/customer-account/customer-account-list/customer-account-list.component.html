@@ -1,0 +1,54 @@
+<a routerLink="add-customer-account/{{customerId}}">Add Account</a>
+<router-outlet></router-outlet>
+
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="customerAccounts">
+    <ng-container matColumnDef="customerAccountId">
+        <mat-header-cell *matHeaderCellDef>Customer Account Id</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.customerAccountId}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="accountType">
+        <mat-header-cell *matHeaderCellDef>Account Type</mat-header-cell>>
+        <mat-cell  *matCellDef="let customerAccount">{{customerAccount.accountType}}</mat-cell>>
+    </ng-container>
+  
+    <ng-container matColumnDef="currency">
+        <mat-header-cell *matHeaderCellDef>Currency</mat-header-cell>>
+        <mat-cell  class="currency-cell" *matCellDef="let customerAccount">{{customerAccount.currency}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="currentBalance">
+        <mat-header-cell *matHeaderCellDef>Current Balance</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.currentBalance}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="accountNumber">
+        <mat-header-cell *matHeaderCellDef>Account Number</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.accountNumber}}</mat-cell>>
+    </ng-container>
+     <ng-container matColumnDef="accountOpenDate">
+        <mat-header-cell *matHeaderCellDef>Account Open Date</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.accountOpenDate}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="accountUpdatedDate">
+        <mat-header-cell *matHeaderCellDef>Account updated Date</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.accountUpdatedDate}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="customerId">
+        <mat-header-cell *matHeaderCellDef>Customer Id</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">{{customerAccount.customer.customerId}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="accountAction">
+        <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>>
+        <mat-cell   *matCellDef="let customerAccount">
+            <button class="btn bg-success text-primary" routerLink="update-customer-account/{{customerAccount.customer.customerId}}/{{customerAccount.customerAccountId}}">Edit</button>
+
+            <button class="btn bg-primary text-danger" >Delete</button>
+        </mat-cell>>
+    </ng-container> 
+    
+    accountUpdatedDate
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>    
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<mat-label  class="text-danger bg-warning">{{responseMessage}}</mat-label>
+
+

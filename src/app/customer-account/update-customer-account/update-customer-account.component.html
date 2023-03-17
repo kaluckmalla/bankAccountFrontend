@@ -1,0 +1,22 @@
+
+<h1>Customer Account Update Form</h1>
+<form [formGroup]="customerAccountUpdateForm" (ngSubmit)="onUpdate(customerAccount.customer.customerId,customerAccount.customerAccountId)">
+
+
+    <mat-form-field appearance="outline">             
+    <mat-label>Current Balance</mat-label>
+    <input matInput  type="number" placeholder="Enter your current balance" min="1000" max="1000000000" formControlName="currentBalance" >       
+      <mat-error *ngIf="customerAccountUpdateForm.controls['currentBalance'].errors?.['required']">    
+        Current balance is required.
+      </mat-error>
+      <mat-error *ngIf="customerAccountUpdateForm.controls['currentBalance'].errors?.['min']">    
+        Enter balance more than 1000.
+      </mat-error> <mat-error *ngIf="customerAccountUpdateForm.controls['currentBalance'].errors?.['max']">    
+        Enter balance less than 1000000000.
+      </mat-error>
+  </mat-form-field>
+       
+    <button class="btn  btn-success " type="submit" >Update</button>  <!--[disabled]="!customerForm.valid"-->
+</form>     
+
+

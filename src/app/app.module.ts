@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { CustomerAccountListComponent } from './customer-account/customer-account-list/customer-account-list.component';
+import { AddCustomerAccountComponent } from './customer-account/add-customer-account/add-customer-account.component';
+import { UpdateCustomerAccountComponent } from './customer-account/update-customer-account/update-customer-account.component';
 
 
 
@@ -22,6 +25,9 @@ import { MaterialModule } from './material/material.module';
     AddCustomerComponent,
     UpdateCustomerComponent,
     CustomerListComponent,
+    CustomerAccountListComponent,
+    AddCustomerAccountComponent,
+    UpdateCustomerAccountComponent,
     
   ],
   imports: [

@@ -1,56 +1,98 @@
 
-<h3>Customer List</h3>
-    <table  width="100%">
 
-        <thead>
-          <th>Id</th>
-          <th>Date of birth</th>
-          <th>Name</th>
-          <th>Gender</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Address</th>
-          <!--<th>Nationality</th>
-          <th>Father name</th>
-          <th>Mother name</th>
-          <th>Grand father name</th>
-          <th>citizenship number</th>
-          <th>Passport number</th>
-          <th>Image name</th>
-          <th>Customer Info Id</th>-->
-          <th>Branch</th>
-          <th>Branch Code</th>
-          <th>Customer added date</th>
-          <th>Customer updated date</th>
-          <th>Action</th>
 
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="customers">
+    <ng-container matColumnDef="customerId">
+        <mat-header-cell *matHeaderCellDef>Customer Id</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.customerId}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="dob">
+        <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>>
+        <mat-cell  *matCellDef="let customer">{{customer.dob}}</mat-cell>>
+    </ng-container>
+  
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>>
+        <mat-cell  class="currency-cell" *matCellDef="let customer">{{customer.name}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.gender}}</mat-cell>>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.phone}}</mat-cell>>
+    </ng-container>
+     <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email Address</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.email}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.address}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="nationality">
+        <mat-header-cell *matHeaderCellDef>Nationality</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">{{customer.nationality}}</mat-cell>>
+    </ng-container> 
+    <ng-container matColumnDef="fatherName">
+      <mat-header-cell *matHeaderCellDef>Father Name</mat-header-cell>>
+      <mat-cell   *matCellDef="let customer">{{customer.fatherName}}</mat-cell>>
+  </ng-container> <ng-container matColumnDef="motherName">
+    <mat-header-cell *matHeaderCellDef>Mother Name</mat-header-cell>>
+    <mat-cell   *matCellDef="let customer">{{customer.motherName}}</mat-cell>>
+</ng-container> <ng-container matColumnDef="grandFatherName">
+  <mat-header-cell *matHeaderCellDef>Grand Father Name</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.grandFatherName}}</mat-cell>>
+</ng-container> <ng-container matColumnDef="citizenshipNumber">
+  <mat-header-cell *matHeaderCellDef>Citizenship Number</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.citizenshipNumber}}</mat-cell>>
+</ng-container> <ng-container matColumnDef="passportNumber">
+  <mat-header-cell *matHeaderCellDef>Passport Number</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.passportNumber}}</mat-cell>>
+</ng-container> 
+<ng-container matColumnDef="imageName">
+  <mat-header-cell *matHeaderCellDef>Image Name</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.imageName}}</mat-cell>>
+</ng-container> 
+ <ng-container matColumnDef="cifId">
+  <mat-header-cell *matHeaderCellDef>CIF Id</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.cifId}}</mat-cell>>
+</ng-container>
+<ng-container matColumnDef="branch">
+  <mat-header-cell *matHeaderCellDef>Branch</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.branch}}</mat-cell>>
+</ng-container> 
+<ng-container matColumnDef="branchCode">
+  <mat-header-cell *matHeaderCellDef>Branch Code</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.branchCode}}</mat-cell>>
+</ng-container> <ng-container matColumnDef="customerAddedDate">
+  <mat-header-cell *matHeaderCellDef>Customer Added Date</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.customerAddedDate}}</mat-cell>>
+</ng-container> <ng-container matColumnDef="customerUpdatedDate">
+  <mat-header-cell *matHeaderCellDef>Customer Updated Date</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">{{customer.customerUpdatedDate}}</mat-cell>>
+</ng-container> 
+<ng-container matColumnDef="account">
+  <mat-header-cell *matHeaderCellDef>Account</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">
+    <button class="btn bg-warning" routerLink="customer-account-list/{{customer.customerId}}">View</button>
+  </mat-cell>>
+</ng-container> 
+
+    <ng-container matColumnDef="customerAction">
+        <mat-header-cell *matHeaderCellDef>Customer Action</mat-header-cell>>
+        <mat-cell   *matCellDef="let customer">
+          <button class="btn bg-success text-warning" routerLink="update-customer/{{customer.customerId}}">Edit</button>
+          <button class="btn bg-primary text-danger" (click)="deleteCustomer(customer.customerId)">Delete</button>
+        </mat-cell>>
+    </ng-container> 
     
-        </thead>
-        <tr *ngFor="let customer of customers">
-            <td >{{customer.customerId}}</td>
-            <td >{{customer.dob}}</td>
-            <td >{{customer.name}}</td>
-            <td >{{customer.gender}}</td>
-            <td >{{customer.phone}}</td>
-            <td >{{customer.email}}</td>
-            <td >{{customer.address}}</td>
-            <!--<td >{{customer.nationality}}</td>
-            <td >{{customer.fatherName}}</td>
-            <td >{{customer.motherName}}</td>
-            <td >{{customer.grandFatherName}}</td>
-            <td >{{customer.citizenshipNumber}}</td>
-            <td >{{customer.passportNumber}}</td>
-            <td >{{customer.imageName}}</td>s
-            <td >{{customer.cifId}}</td> -->
-            <td >{{customer.branch}}</td>
-            <td >{{customer.branchCode}}</td>
-            <td >{{customer.customerAddedDate}}</td>
-            <td >{{customer.customerUpdatedDate}}</td>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>    
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
+</mat-table>
+<mat-label  class="text-danger bg-warning">{{responseMessage}}</mat-label>
 
-            <td ><button class="btn bg-success text-warning" routerLink="update-customer/{{customer.customerId}}">Edit</button><button class="btn bg-primary text-danger" (click)="deleteCustomer(customer.customerId)">Delete</button></td>
-        
-        </tr>
-
-      </table>
-      <router-outlet></router-outlet>
+<router-outlet></router-outlet>

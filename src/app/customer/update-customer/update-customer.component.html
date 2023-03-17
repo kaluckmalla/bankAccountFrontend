@@ -25,7 +25,7 @@
         <mat-select   placeholder="Select your gender" formControlName="gender">
           <mat-option value="male ">Male</mat-option>
           <mat-option value="female ">Female</mat-option>
-          <mat-option value="intersex ">Other</mat-option>
+          <mat-option value="other ">Other</mat-option>
         </mat-select>
         <mat-error *ngIf="customerUpdateForm.controls['gender'].errors?.['required']">
           Gender is required.

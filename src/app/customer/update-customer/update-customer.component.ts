@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
-import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-update-customer',
@@ -36,35 +35,36 @@ export class UpdateCustomerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCustomer(); 
+   
+
   }
   getCustomer() {
+  
+    
     this.customerId = this.activatedRoute.snapshot.params['customerId'];
 
     this.customerService.getCustomer(this.customerId).subscribe(
        {
         next: (response) => {
           if(response['message']==null){
-          this.customer=response;
+            this.customer=response;
+          
+          this.customerUpdateForm.get('name')?.setValue(this.customer.name);
+          this.customerUpdateForm.get('dob')?.setValue(this.customer.dob);
+          this.customerUpdateForm.get('gender')?.setValue(this.customer.gender);
+          this.customerUpdateForm.get('phone')?.setValue(this.customer.phone);
+          this.customerUpdateForm.get('email')?.setValue(this.customer.email);
+          this.customerUpdateForm.get('address')?.setValue(this.customer.address);
+          this.customerUpdateForm.get('nationality')?.setValue(this.customer.nationality);
+          this.customerUpdateForm.get('fatherName')?.setValue(this.customer.fatherName);
+          this.customerUpdateForm.get('motherName')?.setValue(this.customer.motherName);
+          this.customerUpdateForm.get('grandFatherName')?.setValue(this.customer.grandFatherName);
+          this.customerUpdateForm.get('citizenshipNumber')?.setValue(this.customer.citizenshipNumber);
+          this.customerUpdateForm.get('passportNumber')?.setValue(this.customer.passportNumber);
+          this.customerUpdateForm.get('imageName')?.setValue(this.customer.imageName);
+          this.customerUpdateForm.get('branch')?.setValue(this.customer.branch);
+          this.customerUpdateForm.get('branchCode')?.setValue(this.customer.branchCode);
 
-      this.customerUpdateForm=new FormGroup({
-        name: new FormControl(this.customer.name),
-        dob: new FormControl(this.customer.dob),
-        gender: new FormControl(this.customer.gender),
-        phone: new FormControl(this.customer.phone),
-        email: new FormControl(this.customer.email),
-        address: new FormControl(this.customer.address),
-        nationality: new FormControl(this.customer.nationality),
-        fatherName: new FormControl(this.customer.fatherName),
-        motherName: new FormControl(this.customer.motherName),
-        grandFatherName: new FormControl(this.customer.grandFatherName),
-        citizenshipNumber: new FormControl(this.customer.citizenshipNumber),
-        passportNumber: new FormControl(this.customer.passportNumber),
-        imageName: new FormControl(this.customer.imageName),
-        branch: new FormControl(this.customer.branch),
-        branchCode: new FormControl(this.customer.branchCode)
-  
-        })
-      
       }
         else{
           alert('Response from Api : '+response['message'])
@@ -81,6 +81,8 @@ export class UpdateCustomerComponent implements OnInit {
     }
    
 onUpdate(customerId : any){
+  console.log(this.customerUpdateForm.value.name);
+ 
   if(this.customerUpdateForm.valid){
 this.customerService.updateCustomer(customerId,this.customerUpdateForm.value).subscribe(
   {

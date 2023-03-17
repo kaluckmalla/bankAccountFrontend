@@ -9,6 +9,10 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class CustomerListComponent {
   customers: Customer[];
+  displayedColumns = ["customerId","name","dob","gender","phone","email","address","nationality","fatherName","motherName","grandFatherName","citizenshipNumber",
+  "passportNumber","imageName","cifId","branch","branchCode","customerAddedDate","customerUpdatedDate","account","customerAction"];
+  responseMessage: any;
+  
   
   constructor(private customerService: CustomerService){    
   }
@@ -16,9 +20,24 @@ export class CustomerListComponent {
    this.getCustomers(); 
   }
   getCustomers(){
-    this.customerService.getAllCustomer().subscribe((response : Customer[])=>{
-      this.customers=response;
-    });
+    this.customerService.getAllCustomer().subscribe(
+      {
+        next: (response: Customer[]) => {   
+         if(response['message']!=null){
+          this.responseMessage=response['message'];
+        }
+        else{
+          this.customers=response;     
+        }
+        },
+        error: (error) => {
+          alert('Error occor : '+error['message'])
+        },
+        complete: () => {
+          
+        }
+      }
+    );
   }
   deleteCustomer(customerId: string){
     this.customerService.deleteOneCustomer(customerId).subscribe(
