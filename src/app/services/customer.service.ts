@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Customer } from '../class/customer';
+import { PaginationData } from '../class/pagination-data';
 
 
 @Injectable({
@@ -14,8 +15,8 @@ export class CustomerService {
   save(customerData: any){
     return this.http.post(`${this.baseUrl}add`, customerData);
   }
-  getAllCustomer():Observable<Customer[]>{
-    return this.http.get<Customer[]>(`${this.baseUrl}findAll`);
+  getAllCustomer(pageNumber: number,pageSize:number):Observable<PaginationData[]>{
+    return this.http.get<PaginationData[]>(`${this.baseUrl}findAll/${pageNumber}/${pageSize}`);
 
 
   }

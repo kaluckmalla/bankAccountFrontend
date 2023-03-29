@@ -26,4 +26,7 @@ export class CustomerAccountService {
   updateAccount(customerId: any,customerAccountId:any, customerAccountUpdateData: any){
     return this.http.put(`${this.baseUrl}update/${customerId}/${customerAccountId}`,customerAccountUpdateData);
   }
+  getByAccountNumber(params: any): Observable<CustomerAccount[]>{
+    return this.http.get<CustomerAccount[]>(`${this.baseUrl}getByAccNum`,{params});
+  }
 }

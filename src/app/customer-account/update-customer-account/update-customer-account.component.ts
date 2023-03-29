@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-update-customer-account',
@@ -12,7 +14,6 @@ export class UpdateCustomerAccountComponent implements OnInit{
   customerId: any;
   customerAccountId: any;
   customerAccount: any={};//for getting single object i.e. customer
-
   customerAccountUpdateForm=new FormGroup({
     accountType: new FormControl('',[Validators.required]),
 currency: new FormControl('',[Validators.required]),    
@@ -20,7 +21,7 @@ currentBalance: new FormControl('',[Validators.required,Validators.min(1000),Val
 accountNumber: new FormControl('',[Validators.required])
   });
   
-  constructor(private customerAccountService: CustomerAccountService,private activatedRoute: ActivatedRoute, private router: Router){
+  constructor(private customerAccountService: CustomerAccountService,private activatedRoute: ActivatedRoute, private router: Router,private location: Location){
 
   }
   ngOnInit(): void {
@@ -30,6 +31,7 @@ accountNumber: new FormControl('',[Validators.required])
   }
   getCustomerSpecificAccount() {
     this.customerId = this.activatedRoute.snapshot.params['customerId'];
+
     this.customerAccountId = this.activatedRoute.snapshot.params['customerAccountId'];
 
 
@@ -38,7 +40,6 @@ accountNumber: new FormControl('',[Validators.required])
         next: (response) => {
           if(response['message']==null){
           this.customerAccount=response;
-
           this.customerAccountUpdateForm.get('accountType')?.setValue(this.customerAccount.accountType);
           this.customerAccountUpdateForm.get('currency')?.setValue(this.customerAccount.currency);     
           this.customerAccountUpdateForm.get('currentBalance')?.setValue(this.customerAccount.currentBalance); 
@@ -67,7 +68,7 @@ this.customerAccountService.updateAccount(customerId,customerAccountId,this.cust
     next: (response) => {        
      alert('Response from api : '+response['message'])
      if(response['message'] === "Customer account updated successfully"){
-      this.router.navigate(['/']);
+      this.location.back();
     }
     },
     error: (error) => {

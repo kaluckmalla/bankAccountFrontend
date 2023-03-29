@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-add-customer-account',
@@ -18,7 +20,7 @@ export class AddCustomerAccountComponent implements OnInit{
   });
   
 
-  constructor(private customerAccountService: CustomerAccountService , private router: Router,private activatedRoute: ActivatedRoute){
+  constructor(private customerAccountService: CustomerAccountService , private activatedRoute: ActivatedRoute,private location: Location){
 
   }
   ngOnInit(): void {
@@ -31,10 +33,11 @@ export class AddCustomerAccountComponent implements OnInit{
       this.customerAccountService.save(this.customerId ,this.customerAccountForm.value).subscribe( 
         {
           next: (response) => {        
-           alert('Response from api : '+response['message'])
+           alert('Response from api : '+response['message'])         
            
            if(response['message'] === this.customerAccountForm['accountType']+" account created successfully"){
-           this.router.navigate(['../']);
+            this.location.back();
+
           }
           },
           error: (error) => {

@@ -11,7 +11,7 @@ import { CustomerAccountService } from 'src/app/services/customer-account.servic
 export class CustomerAccountListComponent implements OnInit {
   customerId: any;
   customerAccounts: CustomerAccount[];//for getting array of object i.e. customer-accounts
-  displayedColumns = ["customerAccountId","accountType", "currency", "currentBalance", "accountNumber", "accountOpenDate", "accountUpdatedDate","customerId","accountAction"];
+  displayedColumns = ["customerAccountId","customerId","name", "accountNumber","accountType", "currency", "currentBalance", "accountOpenDate", "accountUpdatedDate","accountAction"];
 responseMessage: any;
 
 

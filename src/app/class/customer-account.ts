@@ -1,6 +1,6 @@
 import { Customer } from "./customer";
 
-export class CustomerAccount {
+export interface CustomerAccount {
     customerAccountId: string;
     accountType:string;
     currency:string;

@@ -1,98 +1,104 @@
 
+<router-outlet></router-outlet>
 
-
-<mat-table class="lessons-table mat-elevation-z8" [dataSource]="customers">
+<div *ngIf="activatedRoute.children.length === 0">
+<h2 class="bg-success text-white text-center mb-0">Customer List</h2>
+<mat-table class="customer-table mat-elevation-z8" [dataSource]="customers">
     <ng-container matColumnDef="customerId">
-        <mat-header-cell *matHeaderCellDef>Customer Id</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.customerId}}</mat-cell>>
+        <mat-header-cell class="text-break" *matHeaderCellDef>Customer Id</mat-header-cell>>
+        <mat-cell  class="text-break" *matCellDef="let customer">{{customer.customerId}}</mat-cell>>
     </ng-container>
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell class="text-break"*matHeaderCellDef>Name</mat-header-cell>>
+      <mat-cell  class="text-break" *matCellDef="let customer">{{customer.name}}</mat-cell>>
+  </ng-container>
+  <ng-container matColumnDef="gender">
+    <mat-header-cell class="text-break"*matHeaderCellDef>Gender</mat-header-cell>>
+    <mat-cell   class="text-break"*matCellDef="let customer">{{customer.gender}}</mat-cell>>
+</ng-container>
     <ng-container matColumnDef="dob">
-        <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>>
-        <mat-cell  *matCellDef="let customer">{{customer.dob}}</mat-cell>>
+        <mat-header-cell class="text-break"*matHeaderCellDef>Date of Birth</mat-header-cell>>
+        <mat-cell class="text-break" *matCellDef="let customer">{{customer.dob}}</mat-cell>>
     </ng-container>
   
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>>
-        <mat-cell  class="currency-cell" *matCellDef="let customer">{{customer.name}}</mat-cell>>
-    </ng-container>
-    <ng-container matColumnDef="gender">
-        <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.gender}}</mat-cell>>
-    </ng-container>
+   
     <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.phone}}</mat-cell>>
+        <mat-header-cell class="text-break" *matHeaderCellDef>Phone Number</mat-header-cell>>
+        <mat-cell   class="text-break" *matCellDef="let customer">{{customer.phone}}</mat-cell>>
     </ng-container>
      <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef>Email Address</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.email}}</mat-cell>>
+        <mat-header-cell class="text-break" *matHeaderCellDef>Email Address</mat-header-cell>>
+        <mat-cell  class="text-break" *matCellDef="let customer">{{customer.email}}</mat-cell>>
     </ng-container> 
-    <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.address}}</mat-cell>>
-    </ng-container> 
+  
     <ng-container matColumnDef="nationality">
-        <mat-header-cell *matHeaderCellDef>Nationality</mat-header-cell>>
-        <mat-cell   *matCellDef="let customer">{{customer.nationality}}</mat-cell>>
+        <mat-header-cell class="text-break" *matHeaderCellDef>Nationality</mat-header-cell>>
+        <mat-cell  class="text-break" *matCellDef="let customer">{{customer.nationality}}</mat-cell>>
     </ng-container> 
     <ng-container matColumnDef="fatherName">
-      <mat-header-cell *matHeaderCellDef>Father Name</mat-header-cell>>
-      <mat-cell   *matCellDef="let customer">{{customer.fatherName}}</mat-cell>>
+      <mat-header-cell class="text-break" *matHeaderCellDef>Father Name</mat-header-cell>>
+      <mat-cell   class="text-break" *matCellDef="let customer">{{customer.fatherName}}</mat-cell>>
   </ng-container> <ng-container matColumnDef="motherName">
-    <mat-header-cell *matHeaderCellDef>Mother Name</mat-header-cell>>
-    <mat-cell   *matCellDef="let customer">{{customer.motherName}}</mat-cell>>
-</ng-container> <ng-container matColumnDef="grandFatherName">
-  <mat-header-cell *matHeaderCellDef>Grand Father Name</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.grandFatherName}}</mat-cell>>
-</ng-container> <ng-container matColumnDef="citizenshipNumber">
-  <mat-header-cell *matHeaderCellDef>Citizenship Number</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.citizenshipNumber}}</mat-cell>>
-</ng-container> <ng-container matColumnDef="passportNumber">
-  <mat-header-cell *matHeaderCellDef>Passport Number</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.passportNumber}}</mat-cell>>
-</ng-container> 
-<ng-container matColumnDef="imageName">
-  <mat-header-cell *matHeaderCellDef>Image Name</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.imageName}}</mat-cell>>
+    <mat-header-cell class="text-break" *matHeaderCellDef>Mother Name</mat-header-cell>>
+    <mat-cell  class="text-break" *matCellDef="let customer">{{customer.motherName}}</mat-cell>>
+</ng-container>
+ <ng-container matColumnDef="citizenshipNumber">
+  <mat-header-cell class="text-break"*matHeaderCellDef>Citizenship Number</mat-header-cell>>
+  <mat-cell   class="text-break"*matCellDef="let customer">{{customer.citizenshipNumber}}</mat-cell>>
 </ng-container> 
  <ng-container matColumnDef="cifId">
-  <mat-header-cell *matHeaderCellDef>CIF Id</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.cifId}}</mat-cell>>
+  <mat-header-cell class="text-break" *matHeaderCellDef>CIF Id</mat-header-cell>>
+  <mat-cell  class="text-break"  *matCellDef="let customer">{{customer.cifId}}</mat-cell>>
 </ng-container>
 <ng-container matColumnDef="branch">
-  <mat-header-cell *matHeaderCellDef>Branch</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.branch}}</mat-cell>>
+  <mat-header-cell class="text-break" *matHeaderCellDef>Branch</mat-header-cell>>
+  <mat-cell  class="text-break" *matCellDef="let customer">{{customer.branch}}</mat-cell>>
 </ng-container> 
 <ng-container matColumnDef="branchCode">
-  <mat-header-cell *matHeaderCellDef>Branch Code</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.branchCode}}</mat-cell>>
+  <mat-header-cell class="text-break"*matHeaderCellDef>Branch Code</mat-header-cell>>
+  <mat-cell   class="text-break"*matCellDef="let customer">{{customer.branchCode}}</mat-cell>>
 </ng-container> <ng-container matColumnDef="customerAddedDate">
-  <mat-header-cell *matHeaderCellDef>Customer Added Date</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.customerAddedDate}}</mat-cell>>
-</ng-container> <ng-container matColumnDef="customerUpdatedDate">
-  <mat-header-cell *matHeaderCellDef>Customer Updated Date</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">{{customer.customerUpdatedDate}}</mat-cell>>
+  <mat-header-cell class="text-break"*matHeaderCellDef>Customer Added Date</mat-header-cell>>
+  <mat-cell  class="text-break" *matCellDef="let customer">{{customer.customerAddedDate}}</mat-cell>>
+</ng-container> 
+ 
+
+<ng-container matColumnDef="profileImagePath">
+  <mat-header-cell class="text-break"*matHeaderCellDef>Profile image</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer"><img class="w-100 d-block"src="http://localhost:8080{{customer.profileImagePath}}"></mat-cell>>
 </ng-container> 
 <ng-container matColumnDef="account">
-  <mat-header-cell *matHeaderCellDef>Account</mat-header-cell>>
-  <mat-cell   *matCellDef="let customer">
-    <button class="btn bg-warning" routerLink="customer-account-list/{{customer.customerId}}">View</button>
-  </mat-cell>>
+  <mat-header-cell class="text-break"*matHeaderCellDef>Account</mat-header-cell>>
+  <mat-cell  *matCellDef="let customer">
+    <button class="btn bg-secondary text-white" routerLink="customer-account-list/{{customer.customerId}}">View</button>
+  </mat-cell>
 </ng-container> 
-
+<ng-container matColumnDef="customerDetail">
+  <mat-header-cell class="text-break"*matHeaderCellDef>Details</mat-header-cell>>
+  <mat-cell   *matCellDef="let customer">
+    <button class="btn bg-success text-white"routerLink="customer-detail/{{customer.customerId}}">Details</button>
+  </mat-cell>
+</ng-container> 
     <ng-container matColumnDef="customerAction">
-        <mat-header-cell *matHeaderCellDef>Customer Action</mat-header-cell>>
+        <mat-header-cell class="text-break"*matHeaderCellDef>Action</mat-header-cell>>
         <mat-cell   *matCellDef="let customer">
-          <button class="btn bg-success text-warning" routerLink="update-customer/{{customer.customerId}}">Edit</button>
-          <button class="btn bg-primary text-danger" (click)="deleteCustomer(customer.customerId)">Delete</button>
+          <button class="btn bg-success text-white" routerLink="update-customer/{{customer.customerId}}">Edit</button>
+         <!-- <button class="btn bg-primary text-danger" (click)="deleteCustomer(customer.customerId)">Delete</button>-->
         </mat-cell>>
     </ng-container> 
     
     
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>    
+    <mat-header-row  *matHeaderRowDef="displayedColumns" style="background-color: lightgray;"></mat-header-row>    
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
 </mat-table>
+<mat-paginator 
+
+[pageSizeOptions]="[ 3,6, 9,12,15]" [pageIndex]="pageNumber" [length]="totalCustomerNumber" [pageSize]="pageSize" (page)="handlePageEvent($event)" showFirstLastButtons>
+
+</mat-paginator>
+
 <mat-label  class="text-danger bg-warning">{{responseMessage}}</mat-label>
 
-<router-outlet></router-outlet>
+</div>

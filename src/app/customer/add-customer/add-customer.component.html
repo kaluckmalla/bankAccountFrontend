@@ -1,9 +1,16 @@
 
-    <h1>Customer Form</h1>
-    
-    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-      
-        <mat-form-field appearance="outline">             
+
+  <div class="card-body">
+    <mat-progress-bar mode="indeterminate" *ngIf="isCompleted"></mat-progress-bar>
+
+    <h2 class="bg-success text-white text-center mb-0">Add Customer</h2>
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" >
+      <div class="col-lg-12">
+        <h4 class="fw-bold ms-2 mt-2 mb-2">Basic Information</h4>
+
+
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">             
         <mat-label>Name</mat-label>
         <input matInput  type="text" placeholder="Enter your name" formControlName="name" >
            
@@ -12,7 +19,7 @@
           </mat-error>
 
       </mat-form-field>
-           <mat-form-field appearance="outline">
+           <mat-form-field class="ms-2 mt-2 me-2" appearance="outline">
             <mat-label>Date of Birth</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" formControlName="dob">
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -28,7 +35,7 @@
 
 
 
-                <mat-form-field appearance="outline">           
+                <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Gender</mat-label>
             <mat-select   placeholder="Select your gender" formControlName="gender">
               <mat-option value="male ">Male</mat-option>
@@ -40,7 +47,7 @@
               </mat-error>       
 
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Phone Number</mat-label>
         <input matInput type="tel" placeholder="Enter your phone" formControlName="phone">
             <mat-error *ngIf="customerForm.controls['phone'].errors?.['required']">
@@ -50,7 +57,7 @@
             Phone number is invalid.
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Email</mat-label>
                     <input matInput type="email" placeholder="Enter your email" formControlName="email">
             <mat-error *ngIf="customerForm.controls['email'].errors?.['required']">
@@ -60,14 +67,7 @@
             Email is invalid.
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
-          <mat-label>Address</mat-label>
-        <input matInput type="text" placeholder="Enter your address" formControlName="address">
-            <mat-error *ngIf="customerForm.controls['address'].errors?.['required']">
-            Address is required.
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Nationality</mat-label>
         <mat-select   placeholder="Select your nationality" formControlName="nationality">
           <mat-option value="nepali ">Nepali</mat-option>
@@ -76,47 +76,200 @@
             Nationality is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Father Name</mat-label>
         <input matInput type="text" placeholder="Enter your fatherName" formControlName="fatherName">
             <mat-error *ngIf="customerForm.controls['fatherName'].errors?.['required']">
             Father name is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Mother Name</mat-label>
         <input matInput type="text" placeholder="Enter your motherName" formControlName="motherName">
             <mat-error *ngIf="customerForm.controls['motherName'].errors?.['required']">
             Mother name is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Grand-Father Name</mat-label>
                     <input matInput type="text" placeholder="Enter your grandFatherName" formControlName="grandFatherName">
             <mat-error *ngIf="customerForm.controls['grandFatherName'].errors?.['required']">
             Grand father is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+      </div>
+<div  class="col-lg-12">
+        <h4 class="fw-bold ms-2 mt-2 mb-2">Permanent Address</h4>
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="permanentCountryId" (selectionChange)="onChangePermanentCountry($event.value)">
+                <mat-option *ngFor="let country of permanentCountries " [value]="country.id">{{country.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['permanentCountryId'].errors?.['required']">
+              Country is required.
+              </mat-error>      
+              </mat-form-field>
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select formControlName="permanentStatesId"   (selectionChange)="onChangePermanentState($event.value)">
+                <mat-option *ngFor="let state of permanentStates;" [value]="state.id">{{state.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['permanentStatesId'].errors?.['required']">
+              State is required.
+              </mat-error>           </mat-form-field>
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>District </mat-label>
+            <mat-select formControlName="permanentDistrictsId"  (selectionChange)="onChangePermanentDistrict($event.value)">
+                <mat-option *ngFor="let district of permanentDistricts;" [value]="district.id">{{district.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['permanentDistrictsId'].errors?.['required']">
+              District is required.
+              </mat-error>    
+                    </mat-form-field>    
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>Municipality </mat-label>
+            <mat-select formControlName="permanentMunicipalitiesId" >
+                <mat-option *ngFor="let municipality of permanentMunicipalities;" [value]="municipality.id">
+                    {{municipality.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['permanentMunicipalitiesId'].errors?.['required']">
+              Municipality is required.
+              </mat-error>   
+        </mat-form-field>
+        </div>
+<div class="col-lg-12" >
+  <h4 class="fw-bold ms-2 mt-2 mb-2">Temporary Address</h4>
+  <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="temporaryCountryId" (selectionChange)="onChangeTemporaryCountry($event.value)">
+                <mat-option *ngFor="let country of temporaryCountries " [value]="country.id">{{country.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['temporaryCountryId'].errors?.['required']">
+              Country is required.
+              </mat-error>      
+              </mat-form-field>
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select formControlName="temporaryStatesId"   (selectionChange)="onChangeTemporaryState($event.value)">
+                <mat-option *ngFor="let state of temporaryStates;" [value]="state.id">{{state.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['temporaryStatesId'].errors?.['required']">
+              State is required.
+              </mat-error>           </mat-form-field>
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>District </mat-label>
+            <mat-select formControlName="temporaryDistrictsId"  (selectionChange)="onChangeTemporaryDistrict($event.value)">
+                <mat-option *ngFor="let district of temporaryDistricts;" [value]="district.id">{{district.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['temporaryDistrictsId'].errors?.['required']">
+              District is required.
+              </mat-error>    
+                    </mat-form-field>    
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+            <mat-label>Municipality </mat-label>
+            <mat-select formControlName="temporaryMunicipalitiesId" >
+                <mat-option *ngFor="let municipality of temporaryMunicipalities;" [value]="municipality.id">
+                    {{municipality.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.controls['temporaryMunicipalitiesId'].errors?.['required']">
+              Municipality is required.
+              </mat-error>   
+        </mat-form-field>
+</div>
+
+
+
+
+      <div  class="col-lg-12">
+        <h4 class="fw-bold ms-2 mt-2 mb-2">Customer Verification</h4>
+
+        <mat-form-field   class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Citizanship Number</mat-label>
         <input matInput type="text" placeholder="Enter your citizenshipNumber" formControlName="citizenshipNumber">
             <mat-error *ngIf="customerForm.controls['citizenshipNumber'].errors?.['required']">
             Citizenship number is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Passport Number</mat-label>
         <input matInput type="text" placeholder="Enter your passportNumber" formControlName="passportNumber">        
         </mat-form-field>
-        <mat-form-field appearance="outline">           
-          <mat-label>Image</mat-label>
-        <input matInput type="text" placeholder="Enter your imageName" formControlName="imageName">
-            <mat-error *ngIf="customerForm.controls['imageName'].errors?.['required']">
-            Image is required.
+       
+        <mat-form-field   class="ms-2 mt-2 me-2" appearance="outline">
+          <mat-label *ngIf="selectedCitizenshipFrontImg; else frontImgFile">{{selectedCitizenshipFrontImg.item(0).name}}</mat-label>
+          <ng-template #frontImgFile>
+              <mat-label>Choose Front Image</mat-label>
+          </ng-template>
+          <input matInput disabled>
+          <button type="button" mat-icon-button matSuffix (click)="fileFrontInput.click()">
+              <mat-icon>attach_file</mat-icon>
+          </button>
+          <input hidden (change)="selectCitizenshipFrontImg($event)" #fileFrontInput type="file" >
+          <mat-error *ngIf="customerForm.controls['citizenshipFrontImageName'].errors?.['required']">
+            Front image is required.
             </mat-error>
-        </mat-form-field>
-        
-        <mat-form-field appearance="outline">           
+      </mat-form-field>
+
+
+      <mat-form-field  class="ms-2 mt-2 me-2"  appearance="outline">
+        <mat-label *ngIf="selectedCitizenshipBackImg; else backImgFile">{{selectedCitizenshipBackImg.item(0).name}}</mat-label>
+        <ng-template #backImgFile>
+            <mat-label>Choose Back Image</mat-label>
+        </ng-template>
+        <input matInput disabled>
+        <button type="button" mat-icon-button matSuffix (click)="fileBackInput.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+        <input hidden (change)="selectCitizenshipBackImg($event)" #fileBackInput type="file" >
+        <mat-error *ngIf="customerForm.controls['citizenshipBackImageName'].errors?.['required']">
+          Back image is required.
+          </mat-error>
+    </mat-form-field>
+
+    <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+      <mat-label *ngIf="selectedPassportImg; else passportImgFile">{{selectedPassportImg.item(0).name}}</mat-label>
+      <ng-template #passportImgFile>
+          <mat-label>Choose Passport Image</mat-label>
+      </ng-template>
+      <input matInput disabled>
+      <button type="button" mat-icon-button matSuffix (click)="filePassportInput.click()">
+          <mat-icon>attach_file</mat-icon>
+      </button>
+      <input hidden (change)="selectPassportImg($event)" #filePassportInput type="file" >
+      <mat-error *ngIf="customerForm.controls['passportImageName'].errors?.['required']">
+        Passport image is required.
+        </mat-error>
+  </mat-form-field>
+
+  <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">
+    <mat-label *ngIf="selectedProfileImg; else profileImgFile">{{selectedProfileImg.item(0).name}}</mat-label>
+    <ng-template #profileImgFile>
+        <mat-label>Choose Profile Image</mat-label>
+    </ng-template>
+    <input matInput disabled>
+    <button type="button" mat-icon-button matSuffix (click)="fileProfileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+    <input hidden (change)="selectProfileImg($event)" #fileProfileInput type="file" >
+    <mat-error *ngIf="customerForm.controls['profileImageName'].errors?.['required']">
+      Profile image is required.
+      </mat-error>
+</mat-form-field>
+
+</div>
+<div  class="col-lg-12">
+  <h4 class="fw-bold ms-2 mt-2 mb-2">Bank Information</h4>
+
+
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Branch</mat-label>
         <mat-select   placeholder="Select your branch" formControlName="branch">
           <mat-option value="branch1 ">branch1</mat-option>
@@ -132,14 +285,17 @@
             Branch is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">           
+        <mat-form-field  class="ms-2 mt-2 me-2" appearance="outline">           
           <mat-label>Branch Code</mat-label>
         <input matInput type="text" placeholder="Enter your branchCode" formControlName="branchCode">
             <mat-error *ngIf="customerForm.controls['branchCode'].errors?.['required']">
             Branch code is required.
             </mat-error>
         </mat-form-field>
-        <button class="btn  btn-success " type="submit" >Submit</button>  <!--[disabled]="!customerForm.valid"-->
+</div>
+<div  class="col-lg-12  text-end ">
+        <button class="btn  btn-primary me-5 mb-3 mt-3 " type="submit" >Submit</button>  <!--[disabled]="!customerForm.valid"-->
+        </div>
     </form>     
 
-
+</div>

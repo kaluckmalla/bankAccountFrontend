@@ -1,11 +1,13 @@
-<h1 class="bg-primary text-white text-center fw-bold">{{title}}</h1>
-<div class="bg-warning">
-    <a routerLink="/add-customer">Add Customer</a>
-    <router-outlet></router-outlet>
-    <app-customer-list></app-customer-list>
-
+<header class="bg-primary ">
+<h1  class="text-white text-center fw-bold">{{title}}</h1>
+</header>
+<div >
+<app-dashboard></app-dashboard>
+<app-customer-list></app-customer-list>
 </div>
-
-
-
-
+<footer class="bg-warning text-center">
+      <div >
+        <span>All Rights Reserved.</span>
+        <span>&copy; 2023 Bank Name.</span>
+      </div>
+    </footer>
