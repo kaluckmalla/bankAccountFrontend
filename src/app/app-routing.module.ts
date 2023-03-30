@@ -15,7 +15,7 @@ const routes: Routes = [{path: 'add-customer',title: 'Add Customer',component: A
 {path:'customer-account-list/:customerId',title: 'Customer Account List',component: CustomerAccountListComponent,
 children: [{path:'add-customer-account/:customerId',title: 'Add Customer Account',component: AddCustomerAccountComponent},
 {path: 'update-customer-account/:customerId/:customerAccountId',title: 'Update Customer Account',component: UpdateCustomerAccountComponent}]},
-{path: 'customer-by-account-number',title: 'Customer Details By Account Number',component: CustomerByAccountNumberComponent}
+{path: 'customer-by-account-number/:accountNumber',title: 'Customer Details By Account Number',component: CustomerByAccountNumberComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

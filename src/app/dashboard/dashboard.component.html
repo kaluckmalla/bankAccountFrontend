@@ -1,4 +1,12 @@
 <div  *ngIf="activatedRoute.children.length === 0" class="container">
     <button class="bg-warning rounded"><a class="text-decoration-none fs-6 text-white" routerLink="/add-customer">Add Customer</a></button>
         <button class="bg-warning   rounded"><a class="text-decoration-none fs-6 text-white" routerLink="/customer-by-account-number">Find customer by Account Number</a></button>
-</div>
+       
+        <div class="container">
+            <div class="row col-lg-12 col-sm-12 col-12 justify-content-center"  >
+            <input type="text"  name="accountNumber" placeholder="Enter account number"[(ngModel)]="accountNumber" reuqired style="width: 15rem; height:2rem;">
+            <button type="button" class="bg-danger text-white  rounded" (click)="redirectByAccNum()" style="width: 5rem;">Search</button>   
+        </div>
+         </div>
+
+    </div>

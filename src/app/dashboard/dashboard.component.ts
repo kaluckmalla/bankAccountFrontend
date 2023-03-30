@@ -1,5 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  constructor(public activatedRoute: ActivatedRoute){
+  accountNumber: any;
+
+  constructor(public activatedRoute: ActivatedRoute, private router: Router ){
 
   }
+   redirectByAccNum =  () =>{
+    this.router.navigate(["/customer-by-account-number/"+this.accountNumber])
+    
+}
+
 }

@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
 
 @Component({
@@ -16,22 +16,22 @@ export class CustomerByAccountNumberComponent implements OnInit {
   citizenshipBackImg: any;
   passportImg: any;
   profileImg: any;
-showContainer=false;
 
   ngOnInit(): void {
+    this.accountNumber = this.activatedRoute.snapshot.params['accountNumber'];
+
+    this.getCustomerByAccNum();
   }
   constructor(private customerAccountService: CustomerAccountService,private activatedRoute: ActivatedRoute, private router: Router,private sanitizer: DomSanitizer){
 
   }
   getCustomerByAccNum(){
     let params = new HttpParams().set("accountNumber",this.accountNumber);
-
 this.customerAccountService.getByAccountNumber(params).subscribe(
   {
    next: (response) => {
      if(response['message']==null){
        this.customerAccount=response;  
-       this.showContainer=true;
 
        this.citizenshipFrontImg=this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64, ${this.customerAccount.customer.citizenshipFrontEncodedImage}`); 
        this.citizenshipBackImg=this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64, ${this.customerAccount.customer.citizenshipBackEncodedImage}`); 

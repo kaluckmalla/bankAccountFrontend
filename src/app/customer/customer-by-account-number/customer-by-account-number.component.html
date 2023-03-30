@@ -1,13 +1,6 @@
 
-<div class="container">
-    <div class="row col-lg-12 col-sm-12 col-12 justify-content-center"  >
-    <input type="text"  name="accountNumber" placeholder="Enter account number"[(ngModel)]="accountNumber" reuqired style="width: 15rem; height:2rem;">
-    <button type="button" class="bg-danger text-white  rounded"(click)="getCustomerByAccNum()" style="width: 5rem;">Search</button>   
-</div>
- </div>
 
-<hr>
-<div  *ngIf="showContainer" class="container mb-3">
+<div  *ngIf="customerAccount.accountNumber" class="container mb-3">
 
 
     <div class="row col-lg-12" >
