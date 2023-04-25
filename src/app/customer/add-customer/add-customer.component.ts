@@ -14,6 +14,8 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent  implements OnInit{
+  maxDate= new Date();
+  passportCheckBox=false;
   submitted= false;
   isCompleted=false
   public permanentAddress!: Address[];
@@ -48,7 +50,7 @@ customerForm=new FormGroup({
   name: new FormControl('',Validators.required),
   dob: new FormControl('',[Validators.required]),
   gender: new FormControl('',[Validators.required]),
-  phone: new FormControl('',[Validators.required,Validators.pattern('(\\+977 )[0-9]{10}')]),
+  phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{10}')]),
   email: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$')]),
 
   permanentCountryId: new FormControl('', Validators.required),
@@ -86,6 +88,7 @@ customerForm=new FormGroup({
   constructor(private customerService: CustomerService,private addressService: AddressService , private router: Router){
 
   }ngOnInit() {
+
     // called after the constructor and called  after the first ngOnChanges() 
     this.getAddress();
     this.addressService.getCountry()!.subscribe((data) => {
@@ -307,4 +310,9 @@ handleProfileImg(event) {
  var binaryString = event.target.result;
         this.profileEncodedImg= window.btoa(binaryString);
 }
+//when clicked on checked box
+
+passportCheckBoxFunction = (event) => {    
+  this.passportCheckBox = event.target.checked;
+  }
 }

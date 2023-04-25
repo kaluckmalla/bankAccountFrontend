@@ -17,6 +17,7 @@ import { UpdateCustomerAccountComponent } from './customer-account/update-custom
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CustomerByAccountNumberComponent } from './customer/customer-by-account-number/customer-by-account-number.component';
+import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-cifid/customer-detail-by-cifid.component';
 
 
 
@@ -33,7 +34,8 @@ import { CustomerByAccountNumberComponent } from './customer/customer-by-account
     UpdateCustomerAccountComponent,
 CustomerDetailComponent,
 DashboardComponent,
-CustomerByAccountNumberComponent    
+CustomerByAccountNumberComponent,
+CustomerDetailByCifidComponent    
   ],
   imports: [
     

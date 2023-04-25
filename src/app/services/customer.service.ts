@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Customer } from '../class/customer';
 import { PaginationData } from '../class/pagination-data';
+import { CustomerCustomerAccount } from '../class/customer-customer-account';
 
 
 @Injectable({
@@ -29,5 +30,8 @@ export class CustomerService {
   }
   updateCustomer(customerId: any, customerUpdateData: any){
     return this.http.put(`${this.baseUrl}update/${customerId}`,customerUpdateData);
+  }
+  getByCifID(params: any): Observable<CustomerCustomerAccount[]>{
+    return this.http.get<CustomerCustomerAccount[]>(`${this.baseUrl}getByCifId`,{params});
   }
 }
