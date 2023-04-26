@@ -21,7 +21,7 @@
     </mat-form-field>
          <mat-form-field class="ms-2 mt-2 me-2" appearance="outline">
           <mat-label>Date of Birth</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" formControlName="dob">
+          <input matInput [matDatepicker]="picker"  [max]="maxDate" placeholder="MM/DD/YYYY" formControlName="dob">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="customerUpdateForm.controls['dob'].errors?.['required']">

@@ -11,9 +11,15 @@ import { CustomerService } from 'src/app/services/customer.service';
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.css'],
 })
+
 export class AddCustomerComponent implements OnInit {
   submitted = false;
   isCompleted = false;
+export class AddCustomerComponent  implements OnInit{
+  maxDate= new Date();
+  passportCheckBox=false;
+  submitted= false;
+  isCompleted=false
   public permanentAddress!: Address[];
   permanentCountries: any;
   permanentStates: any;
@@ -94,6 +100,51 @@ export class AddCustomerComponent implements OnInit {
   ) {}
   ngOnInit() {
     // called after the constructor and called  after the first ngOnChanges()
+
+customerForm=new FormGroup({
+  name: new FormControl('',Validators.required),
+  dob: new FormControl('',[Validators.required]),
+  gender: new FormControl('',[Validators.required]),
+  phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{10}')]),
+  email: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$')]),
+
+  permanentCountryId: new FormControl('', Validators.required),
+  permanentStatesId: new FormControl('', Validators.required),
+  permanentDistrictsId: new FormControl('', Validators.required),
+  permanentMunicipalitiesId: new FormControl('', Validators.required),
+
+  temporaryCountryId: new FormControl('', Validators.required),
+  temporaryStatesId: new FormControl('', Validators.required),
+  temporaryDistrictsId: new FormControl('', Validators.required),
+  temporaryMunicipalitiesId: new FormControl('', Validators.required),
+
+
+  nationality: new FormControl('',[Validators.required]),
+  fatherName: new FormControl('',[Validators.required]),
+  motherName: new FormControl('',[Validators.required]),
+  grandFatherName: new FormControl('',[Validators.required]),
+  citizenshipNumber: new FormControl('',[Validators.required]),
+
+  citizenshipFrontImageName: new FormControl('',),
+  citizenshipFrontEncodedImage: new FormControl(''),
+   citizenshipBackImageName: new FormControl('',),
+  citizenshipBackEncodedImage: new FormControl(''),
+  passportImageName: new FormControl(''),
+  passportEncodedImage: new FormControl(''),
+  profileImageName: new FormControl(''),
+  profileEncodedImage: new FormControl(''),
+
+  passportNumber: new FormControl(''),
+  branch: new FormControl('',[Validators.required]),
+  branchCode: new FormControl('',[Validators.required]),
+});
+
+
+  constructor(private customerService: CustomerService,private addressService: AddressService , private router: Router){
+
+  }ngOnInit() {
+
+    // called after the constructor and called  after the first ngOnChanges() 
     this.getAddress();
     this.addressService.getCountry()!.subscribe((data) => {
       this.permanentCountries = data;
@@ -316,5 +367,17 @@ export class AddCustomerComponent implements OnInit {
   handleProfileImg(event) {
     var binaryString = event.target.result;
     this.profileEncodedImg = window.btoa(binaryString);
+
+    reader.readAsBinaryString(file);
+}
+}
+handleProfileImg(event) {
+ var binaryString = event.target.result;
+        this.profileEncodedImg= window.btoa(binaryString);
+}
+//when clicked on checked box
+
+passportCheckBoxFunction = (event) => {    
+  this.passportCheckBox = event.target.checked;
   }
 }

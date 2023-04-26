@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DashboardComponent {
   accountNumber: any;
+  cifId: any;
+
 
   constructor(public activatedRoute: ActivatedRoute, private router: Router ){
 
@@ -16,6 +18,10 @@ export class DashboardComponent {
    redirectByAccNum =  () =>{
     this.router.navigate(["/customer-by-account-number/"+this.accountNumber])
     
+}
+redirectByCifId =  () =>{
+  this.router.navigate(["/customer-detail-by-cifid/"+this.cifId])
+  
 }
 
 }

@@ -8,6 +8,7 @@ import { CustomerByAccountNumberComponent } from './customer/customer-by-account
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { UpdateCustomerComponent } from './customer/update-customer/update-customer.component';
+import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-cifid/customer-detail-by-cifid.component';
 
 const routes: Routes = [{path: 'add-customer',title: 'Add Customer',component: AddCustomerComponent},
 {path: 'update-customer/:customerId',title: 'Update Customer',component: UpdateCustomerComponent},
@@ -15,7 +16,9 @@ const routes: Routes = [{path: 'add-customer',title: 'Add Customer',component: A
 {path:'customer-account-list/:customerId',title: 'Customer Account List',component: CustomerAccountListComponent,
 children: [{path:'add-customer-account/:customerId',title: 'Add Customer Account',component: AddCustomerAccountComponent},
 {path: 'update-customer-account/:customerId/:customerAccountId',title: 'Update Customer Account',component: UpdateCustomerAccountComponent}]},
-{path: 'customer-by-account-number/:accountNumber',title: 'Customer Details By Account Number',component: CustomerByAccountNumberComponent}
+{path: 'customer-by-account-number/:accountNumber',title: 'Customer Details By Account Number',component: CustomerByAccountNumberComponent},
+{path: 'customer-detail-by-cifid/:cifId',title: 'Customer Details By Customer Information Id',component: CustomerDetailByCifidComponent}
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
