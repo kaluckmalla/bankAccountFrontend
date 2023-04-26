@@ -112,7 +112,22 @@ public getAddress() {
     }
   );
 }
-
+onChangePermanentAddress(e) {
+  let countryId: any = this.customerForm.value.permanentCountryId;
+  let statesId: any = this.customerForm.value.permanentStatesId;
+  this.onChangeTemporaryState(statesId);
+  let districtsId: any = this.customerForm.value.permanentDistrictsId;
+  this.onChangeTemporaryDistrict(districtsId);
+  let municipalitiesId: any =
+    this.customerForm.value.permanentMunicipalitiesId;
+  this.customerForm.get('temporaryCountryId')?.setValue(countryId);
+  this.customerForm.get('temporaryStatesId')?.setValue(statesId);
+  this.customerForm.get('temporaryDistrictsId')?.setValue(districtsId);
+  this.customerForm
+    .get('temporaryMunicipalitiesId')
+    ?.setValue(municipalitiesId);
+  e.preventDefault();
+}
 onChangePermanentCountry(countryId: any) {
   if (countryId) {
     this.addressService.getState().subscribe((data) => {
