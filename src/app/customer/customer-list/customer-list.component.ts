@@ -9,21 +9,22 @@ import { PaginationData } from 'src/app/class/pagination-data';
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
   styleUrls: ['./customer-list.component.css']
+  
 })
+
 
 export class CustomerListComponent { 
 
    pageNumber: number;
    pageSize: number;
    totalCustomerNumber: number;
-
   customers: any;
-  displayedColumns = ["customerId","name","gender","dob","phone","email","nationality","fatherName","motherName","citizenshipNumber",
-  "cifId","branch","branchCode","customerAddedDate",
-  "profileImagePath","account","customerDetail","customerAction"];
+  displayedColumns = ["name","phone","email","nationality","branch","account","customerDetail"];
   responseMessage: any;
 
-  constructor(private customerService: CustomerService, private router: Router,public activatedRoute: ActivatedRoute){    
+  constructor(private customerService: CustomerService, 
+    private router: Router,
+    public activatedRoute: ActivatedRoute){    
   }
   ngOnInit(): void {
     this.pageNumber=0;
