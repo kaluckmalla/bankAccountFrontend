@@ -187,7 +187,7 @@ onChangeTemporaryDistrict(id: any) {
 onSubmit(){
   this.submitted=true;
   this.isCompleted=true;
-  
+
   this.customerForm.controls['citizenshipFrontImageName'].setValue(this.citizenshipFrontImgName);
 var cfeiImg= this.customerForm.controls['citizenshipFrontEncodedImage'];
 cfeiImg.setValue(this.citizenshipFrontEncodedImg);
