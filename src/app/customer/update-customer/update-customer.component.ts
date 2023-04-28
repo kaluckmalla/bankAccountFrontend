@@ -13,8 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UpdateCustomerComponent implements OnInit {
   maxDate= new Date();
-
   isCompleted=false
+  passportCheckBox=true;
 
   customerId: any;
   customer: any={};//for getting single object i.e. customer

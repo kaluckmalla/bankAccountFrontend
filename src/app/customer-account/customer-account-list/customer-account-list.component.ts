@@ -17,7 +17,7 @@ responseMessage: any;
 
 
 
-  constructor(private customerAccountService: CustomerAccountService,private activatedRoute: ActivatedRoute, private router: Router){
+  constructor(private customerAccountService: CustomerAccountService,public activatedRoute: ActivatedRoute, private router: Router){
 
   }
   ngOnInit(): void {

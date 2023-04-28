@@ -1,4 +1,8 @@
+
+<div  *ngIf="activatedRoute.children.length === 0">
+
 <a routerLink="add-customer-account/{{customerId}}">Add Account</a>
+</div>
 <router-outlet></router-outlet>
 
 <mat-table class="lessons-table mat-elevation-z8" [dataSource]="customerAccounts">

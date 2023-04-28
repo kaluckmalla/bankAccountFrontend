@@ -35,7 +35,7 @@ export class AddCustomerAccountComponent implements OnInit{
           next: (response) => {        
            alert('Response from api : '+response['message'])         
            
-           if(response['message'] === this.customerAccountForm['accountType']+" account created successfully"){
+           if(response['message'] === this.customerAccountForm.controls['accountType'].value+" account created successfully"){
             this.location.back();
 
           }
