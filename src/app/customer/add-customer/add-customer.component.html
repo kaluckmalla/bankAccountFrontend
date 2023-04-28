@@ -1,14 +1,12 @@
+
 <div class="card-body ">
   <mat-progress-bar mode="indeterminate" *ngIf="isCompleted"></mat-progress-bar>
-
-
   <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <h2 class="form-title text-center pt-2">Customer Registration Form</h2>
 
     <div class="container">
       <div class="row">
         <h4 class="section-title ">Basic Information</h4>
-
       <mat-form-field class="form-field" appearance="outline" mat-danger>
         <mat-label >Name</mat-label>
         <input matInput type="text" placeholder="Enter your name" formControlName="name">
@@ -193,32 +191,33 @@
         <legend class="float-none w-auto fs-6 text-center">Citizenship *</legend>
 <div class="text-end">
         <mat-form-field class="form-field " appearance="outline">
+
           <mat-label>Citizenship Number</mat-label>
-          <input matInput type="text" placeholder="Enter your citizenshipNumber" formControlName="citizenshipNumber">
-          <mat-error *ngIf="customerForm.controls['citizenshipNumber'].errors?.['required']">
+        <input matInput type="text" placeholder="Enter your citizenshipNumber" formControlName="citizenshipNumber">
+            <mat-error *ngIf="customerForm.controls['citizenshipNumber'].errors?.['required']">
             Citizenship number is required.
-          </mat-error>
+            </mat-error>
         </mat-form-field>
+
       </div>
       <div class="text-end">
 
         <mat-form-field class="form-field " appearance="outline" (click)="fileFrontInput.click()">
           <mat-label
             *ngIf="selectedCitizenshipFrontImg; else frontImgFile">{{selectedCitizenshipFrontImg.item(0).name}}</mat-label>
+
           <ng-template #frontImgFile>
-            <mat-label>Choose Front Image</mat-label>
+              <mat-label>Choose Front Image</mat-label>
           </ng-template>
           <input matInput disabled>
           <button type="button" mat-icon-button matSuffix (click)="fileFrontInput.click()">
-            <mat-icon>attach_file</mat-icon>
+              <mat-icon>attach_file</mat-icon>
           </button>
-          <input hidden (change)="selectCitizenshipFrontImg($event)" #fileFrontInput type="file">
+          <input hidden (change)="selectCitizenshipFrontImg($event)" #fileFrontInput type="file" >
           <mat-error *ngIf="customerForm.controls['citizenshipFrontImageName'].errors?.['required']">
             Front image is required.
           </mat-error>
         </mat-form-field>
-
-
         <mat-form-field class="form-field " appearance="outline" (click)="fileBackInput.click()">
           <mat-label
             *ngIf="selectedCitizenshipBackImg; else backImgFile">{{selectedCitizenshipBackImg.item(0).name}}</mat-label>
@@ -294,6 +293,7 @@
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Branch</mat-label>
         <mat-select placeholder="Select your branch" formControlName="branch">
+
           <mat-option value="branch1 ">branch1</mat-option>
           <mat-option value="branch3 ">branch3</mat-option>
           <mat-option value="branch4 ">branch4</mat-option>
@@ -323,3 +323,4 @@
   </form>
 
 </div>
+

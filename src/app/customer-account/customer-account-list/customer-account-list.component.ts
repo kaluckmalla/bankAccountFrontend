@@ -6,45 +6,44 @@ import { CustomerAccountService } from 'src/app/services/customer-account.servic
 @Component({
   selector: 'app-customer-account-list',
   templateUrl: './customer-account-list.component.html',
-  styleUrls: ['./customer-account-list.component.css']
+  styleUrls: ['./customer-account-list.component.css'],
 })
 export class CustomerAccountListComponent implements OnInit {
   customerId: any;
-  customerAccounts: CustomerAccount[];//for getting array of object i.e. customer-accounts
-  displayedColumns = ["customerAccountId","customerId","name", "accountNumber","accountType", "currency", "currentBalance", "accountOpenDate", "accountUpdatedDate","accountAction"];
-responseMessage: any;
+  customerAccounts: CustomerAccount[]; //for getting array of object i.e. customer-accounts
+  displayedColumns = [
+    'name',
+    'accountNumber',
+    'accountType',
+    'currentBalance',
+    'accountOpenDate',
+    'accountAction',
+  ];
+  responseMessage: any;
 
-
-
-
-  constructor(private customerAccountService: CustomerAccountService,public activatedRoute: ActivatedRoute, private router: Router){
-
-  }
+  constructor(
+    private customerAccountService: CustomerAccountService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.getCustomerAccounts();
   }
-  getCustomerAccounts(){
+  getCustomerAccounts() {
     this.customerId = this.activatedRoute.snapshot.params['customerId'];
 
-    this.customerAccountService.getAccounts(this.customerId).subscribe(
-      {
-        next: (response: CustomerAccount[]) => {  
-          
-         if(response['message']!=null){
-        this.responseMessage=response['message'];
+    this.customerAccountService.getAccounts(this.customerId).subscribe({
+      next: (response: CustomerAccount[]) => {
+        if (response['message'] != null) {
+          this.responseMessage = response['message'];
+        } else {
+          this.customerAccounts = response;
         }
-        else{
-          this.customerAccounts=response;     
-
-        }
-        },
-        error: (error) => {
-          alert('Error occor : '+error['message'])
-        },
-        complete: () => {
-          
-        }
-      }
-    );
+      },
+      error: (error) => {
+        alert('Error occor : ' + error['message']);
+      },
+      complete: () => {},
+    });
   }
 }
