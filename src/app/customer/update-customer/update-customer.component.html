@@ -7,7 +7,7 @@
 
     <div class="container">
       <div class="row">
-        <h4 class="section-title ">Basic Information</h4>
+        <h4 class="section-title ">Personal Details</h4>
 
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Name</mat-label>
@@ -60,7 +60,17 @@
           Email is invalid.
         </mat-error>
       </mat-form-field>
-    
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Nationality</mat-label>
+        <mat-select placeholder="Select your nationality" formControlName="nationality">
+          <mat-option value="nepali ">Nepali</mat-option>
+        </mat-select>
+        <mat-error *ngIf="customerUpdateForm.controls['nationality'].errors?.['required']">
+          Nationality is required.
+        </mat-error>
+      </mat-form-field>
+      <div class="row">
+        <h4 class="section-title">Family Details</h4>
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Father Name</mat-label>
         <input matInput type="text" placeholder="Enter your fatherName" formControlName="fatherName">
@@ -82,22 +92,15 @@
           Grand father is required.
         </mat-error>
       </mat-form-field>
+      </div>
       
-      <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Nationality</mat-label>
-        <mat-select placeholder="Select your nationality" formControlName="nationality">
-          <mat-option value="nepali ">Nepali</mat-option>
-        </mat-select>
-        <mat-error *ngIf="customerUpdateForm.controls['nationality'].errors?.['required']">
-          Nationality is required.
-        </mat-error>
-      </mat-form-field>
       </div>
       
 
 
     <div class="row">
-      <h4 class=" ms-2 mt-2 mb-2">Permanent Address</h4>
+      <h4 class="section-title">Permanent Address</h4>
+
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Country</mat-label>
         <mat-select formControlName="permanentCountryId" (selectionChange)="onChangePermanentCountry($event.value)">
@@ -141,7 +144,7 @@
     </div>
     <div class="row">
       <!--<button mat-button (click)="onChangePermanentAddress($event)" class="address-mat-btn text-info w-25">Same as Above</button>-->
-      <h4 class=" ms-2 mt-2 mb-2">Temporary Address</h4>
+      <h4 class="section-title">Temporary Address</h4>
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Country</mat-label>
         <mat-select formControlName="temporaryCountryId" (selectionChange)="onChangeTemporaryCountry($event.value)">
@@ -188,7 +191,7 @@
 
 
     <div class="row">
-      <h4 class="section-title">Customer Verification</h4>
+      <h4 class="section-title">Identification Details</h4>
 <div class="col-lg-6">
       <fieldset class="border  border-1  rounded-4 pb-4 ">
         <legend class="float-none w-auto fs-6 text-center">Citizenship *</legend>
@@ -251,11 +254,11 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="col-lg-12  text-end ">
-      <button class="btn  text-white mb-3 mt-3 " type="submit">Update</button>
-      <!--[disabled]="!customerForm.valid"-->
+   
+  <button class="btn  text-white mb-3 mt-3 " type="submit" style="  position: relative; 
+  bottom:40px;">Update</button>
     </div>
-  </div>
+
   </form>
 
 </div>

@@ -1,6 +1,7 @@
-<div *ngIf="activatedRoute.children.length === 0" class="container mb-3">
+<div *ngIf="activatedRoute.children.length === 0" class="container mb-3" >
   <div class="d-flex justify-content-between">
     <button mat-raised-button color="primary" routerLink="/add-customer" class="mat-button">
+      <mat-icon>add</mat-icon>
       <span>Add Customer</span>
     </button>
     <div class="d-flex">

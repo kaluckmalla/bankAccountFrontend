@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // title = 'Bank Project';
+   title = '';
  constructor(public activatedRoute: ActivatedRoute){
 
  }

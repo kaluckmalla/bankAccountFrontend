@@ -20,8 +20,12 @@ export class DashboardComponent {
     
 }
 redirectByCifId =  () =>{
-  this.router.navigate(["/customer-detail-by-cifid/"+this.cifId])
-  
+  if(this.cifId==null){
+  alert("Customer information id can't be empty")
 }
+else{
+  this.router.navigate(["/customer-detail-by-cifid/"+this.cifId])
 
+}
+}
 }

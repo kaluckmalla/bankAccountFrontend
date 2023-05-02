@@ -47,16 +47,8 @@ export class AddCustomerComponent implements OnInit {
     name: new FormControl('', Validators.required),
     dob: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [
-      Validators.required,
-      Validators.pattern('[0-9]{10}'),
-    ]),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.pattern(
-        '^[a-zA-Z0-9_+&*-]+(?:.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+.)+[a-zA-Z]{2,7}$'
-      ),
-    ]),
+    phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]),
+    email: new FormControl('', [Validators.required,Validators.pattern('^[a-zA-Z0-9_+&*-]+(?:.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+.)+[a-zA-Z]{2,7}$')]),
 
     permanentCountryId: new FormControl('', Validators.required),
     permanentStatesId: new FormControl('', Validators.required),
