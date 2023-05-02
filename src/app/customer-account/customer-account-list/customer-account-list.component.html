@@ -1,4 +1,4 @@
-<div  *ngIf="activatedRoute.children.length === 0 style="width: 80%; margin-left: auto; margin-right: auto;">
+<div  *ngIf="activatedRoute.children.length === 0" style="width: 80%; margin-left: auto; margin-right: auto;">
 <a routerLink="add-customer-account/{{customerId}}">Add Account</a>
 </div>
 <router-outlet></router-outlet>
@@ -54,4 +54,3 @@
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
     <mat-label class="text-danger bg-warning">{{responseMessage}}</mat-label>
-</div>
