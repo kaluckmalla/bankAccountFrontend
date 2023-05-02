@@ -23,7 +23,7 @@ export class CustomerAccountListComponent implements OnInit {
 
   constructor(
     private customerAccountService: CustomerAccountService,
-    private activatedRoute: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
   ngOnInit(): void {
