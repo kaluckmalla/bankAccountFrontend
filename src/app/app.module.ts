@@ -35,7 +35,7 @@ import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-ci
 CustomerDetailComponent,
 DashboardComponent,
 CustomerByAccountNumberComponent,
-CustomerDetailByCifidComponent    
+CustomerDetailByCifidComponent,
   ],
   imports: [
     

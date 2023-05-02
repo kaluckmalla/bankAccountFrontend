@@ -1,6 +1,6 @@
 <div>
   <mat-progress-bar mode="indeterminate" *ngIf="isCompleted"></mat-progress-bar>
-  <mat-form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <h2 class="form-title text-center pt-2">Customer Registration Form</h2>
     <div class="container">
       <div class="row">
@@ -68,7 +68,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="form-field mt-3" appearance="outline" (click)="fileProfileInput.click()">
+        <mat-form-field class="form-field" appearance="outline" (click)="fileProfileInput.click()">
 
           <mat-label *ngIf="selectedProfileImg  ;  else profileImgFile">{{selectedProfileImg.item(0).name}}</mat-label>
           <ng-template #profileImgFile>
@@ -241,7 +241,7 @@
         </mat-form-field>
       </div>
       <div class="row">
-        <h4 class="section-title ">Temporary Address <button mat-raised-button color="accent"
+        <h4 class="section-title ">Temporary Address <button  mat-raised-button color="accent"
             (click)="onChangePermanentAddress($event)">Same as Above</button></h4>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>Country</mat-label>
@@ -314,5 +314,5 @@
       <button class="btn  text-white mb-3 mt-3 " type="submit" style="  position: relative; 
       bottom:40px;">Submit</button>
     </div>
-  </mat-form>
+  </form>
 </div>
