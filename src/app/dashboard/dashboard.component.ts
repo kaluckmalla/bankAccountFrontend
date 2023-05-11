@@ -1,6 +1,7 @@
-import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AddCustomerComponent } from '../customer/add-customer/add-customer.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,20 +13,21 @@ export class DashboardComponent {
   cifId: any;
 
 
-  constructor(public activatedRoute: ActivatedRoute, private router: Router ){
+  constructor(public activatedRoute: ActivatedRoute, private router: Router,public dialog: MatDialog ){
 
   }
+    openAddCustomer(): void {
+   this.dialog.open(AddCustomerComponent,{
+    width:'50%',
+    height:'100%'
+
+   });
+   
+  }
+
    redirectByAccNum =  () =>{
     this.router.navigate(["/customer-by-account-number/"+this.accountNumber])
     
 }
-redirectByCifId =  () =>{
-  if(this.cifId==null){
-  alert("Customer information id can't be empty")
-}
-else{
-  this.router.navigate(["/customer-detail-by-cifid/"+this.cifId])
 
-}
-}
 }

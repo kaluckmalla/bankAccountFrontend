@@ -1,10 +1,12 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/class/customer';
 import { CustomerAccount } from 'src/app/class/customer-account';
 import { CustomerCustomerAccount } from 'src/app/class/customer-customer-account';
+import { FullImageViewComponent } from 'src/app/full-image-view/full-image-view.component';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
@@ -25,15 +27,16 @@ export class CustomerDetailByCifidComponent implements OnInit{
 
     this.getCustomerByCifID();
   }
-  constructor(private customerService: CustomerService,private activatedRoute: ActivatedRoute, private router: Router,private sanitizer: DomSanitizer){
+  constructor(private customerService: CustomerService,private activatedRoute: ActivatedRoute, private router: Router,private sanitizer: DomSanitizer,public dialog: MatDialog){
 
   }
   getCustomerByCifID(){
+
     let params = new HttpParams().set("cifId",this.cifId);
 this.customerService.getByCifID(params).subscribe(
   {
    next: (response: CustomerCustomerAccount[]) => {
-     if(response['message']==null){
+     if(response['message']==null){          
        this.customer=response["customerDto"];        
        this.customerAccounts=response["customerAccountDtoList"];         
        this.citizenshipFrontImg=this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64, ${this.customer.citizenshipFrontEncodedImage}`); 
@@ -57,5 +60,17 @@ this.customerService.getByCifID(params).subscribe(
 
   }
 
-
+  showFullImage(imagePath: any): void {
+    var baseImgOpenLink="http://localhost:8080";
+    this.dialog.open(FullImageViewComponent,{
+     width:'70%',
+     height:'95%',
+     data: {
+      imageLink: baseImgOpenLink+imagePath
+     }
+ 
+    });
+    
+   }
+  
 }

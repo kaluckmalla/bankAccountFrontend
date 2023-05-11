@@ -24,10 +24,12 @@ export class CustomerService {
   getCustomer(customerId: any): Observable<Customer[]>{
     return this.http.get<Customer[]>(`${this.baseUrl}find/${customerId}`);
   }
+  /*
   deleteOneCustomer(customerId: any){
     return this.http.delete(`${this.baseUrl}delete/${customerId}`);
 
   }
+  */
   updateCustomer(customerId: any, customerUpdateData: any){
     return this.http.put(`${this.baseUrl}update/${customerId}`,customerUpdateData);
   }

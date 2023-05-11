@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { Address } from 'src/app/class/address';
 import { AddressService } from 'src/app/services/address.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-customer',
@@ -14,7 +15,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UpdateCustomerComponent implements OnInit {
   maxDate= new Date();
   isCompleted=false
-  passportCheckBox=true;
+  sameAsPermanntCheckBox = false; 
+ showCitizenshipFields=false;
+showPassportFields=false;
 
   customerId: any;
   customer: any={};//for getting single object i.e. customer
@@ -51,14 +54,16 @@ export class UpdateCustomerComponent implements OnInit {
     fatherName: new FormControl('',[Validators.required]),
     motherName: new FormControl('',[Validators.required]),
     grandFatherName: new FormControl('',[Validators.required]),
-    citizenshipNumber: new FormControl('',[Validators.required]),
+    documentType: new FormControl('', [Validators.required]),
+    citizenshipNumber: new FormControl(''),
     passportNumber: new FormControl(''),
     branch: new FormControl('',[Validators.required]),
     branchCode: new FormControl('',[Validators.required]),
   });
   
-  constructor(private customerService: CustomerService,private addressService: AddressService,private activatedRoute: ActivatedRoute, private router: Router){
-
+  constructor(private customerService: CustomerService,private addressService: AddressService, private router:Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<UpdateCustomerComponent> ){
+this.customerId=data.custmerid;
   }
   ngOnInit(): void {
     this.getCustomer(); 
@@ -140,12 +145,46 @@ export class UpdateCustomerComponent implements OnInit {
         .subscribe((data) => (this.temporaryMunicipalities = data));
     }
   }
+  onChangePermanentAddress(e) {
+    this.sameAsPermanntCheckBox =  e.target.checked;
+
+    if( e.target.checked==true){
+  
+    let countryId: any = this.customerUpdateForm.value.permanentCountryId;
+    let statesId: any = this.customerUpdateForm.value.permanentStatesId;
+    this.onChangeTemporaryState(statesId);
+    let districtsId: any = this.customerUpdateForm.value.permanentDistrictsId;
+    this.onChangeTemporaryDistrict(districtsId);
+    let municipalitiesId: any =
+      this.customerUpdateForm.value.permanentMunicipalitiesId;
+    this.customerUpdateForm.get('temporaryCountryId')?.setValue(countryId);
+    this.customerUpdateForm.get('temporaryStatesId')?.setValue(statesId);
+    this.customerUpdateForm.get('temporaryDistrictsId')?.setValue(districtsId);
+    this.customerUpdateForm
+      .get('temporaryMunicipalitiesId')
+      ?.setValue(municipalitiesId);
+    e.preventDefault();
+    }
+    else{
+  
+      let countryId: any = this.customerUpdateForm.value.permanentCountryId;
+      let statesId: any = this.customerUpdateForm.value.permanentStatesId;
+      this.onChangeTemporaryState(statesId);
+      let districtsId: any = this.customerUpdateForm.value.permanentDistrictsId;
+      this.onChangeTemporaryDistrict(districtsId);
+      let municipalitiesId: any =
+        this.customerUpdateForm.value.permanentMunicipalitiesId;
+      this.customerUpdateForm.get('temporaryCountryId')?.setValue(null);
+      this.customerUpdateForm.get('temporaryStatesId')?.setValue(null);
+      this.customerUpdateForm.get('temporaryDistrictsId')?.setValue(null);
+      this.customerUpdateForm
+        .get('temporaryMunicipalitiesId')
+        ?.setValue(null);
+      e.preventDefault();
+      }
+  }
   getCustomer() {
     this.isCompleted=true;
-
-    
-    this.customerId = this.activatedRoute.snapshot.params['customerId'];
-
     this.customerService.getCustomer(this.customerId).subscribe(
        {
         next: (response) => {
@@ -182,10 +221,13 @@ export class UpdateCustomerComponent implements OnInit {
           this.customerUpdateForm.get('fatherName')?.setValue(this.customer.fatherName);
           this.customerUpdateForm.get('motherName')?.setValue(this.customer.motherName);
           this.customerUpdateForm.get('grandFatherName')?.setValue(this.customer.grandFatherName);
+          this.customerUpdateForm.get('documentType')?.setValue(this.customer.documentType);
           this.customerUpdateForm.get('citizenshipNumber')?.setValue(this.customer.citizenshipNumber);
           this.customerUpdateForm.get('passportNumber')?.setValue(this.customer.passportNumber);
           this.customerUpdateForm.get('branch')?.setValue(this.customer.branch);
           this.customerUpdateForm.get('branchCode')?.setValue(this.customer.branchCode);
+          this.onDocumentChange(this.customer.documentType) ;
+
 
       }
         else{
@@ -214,7 +256,8 @@ this.customerService.updateCustomer(customerId,this.customerUpdateForm.value).su
       }    
      alert('Response from api : '+response['message'])
      if(response['message'] === "Customer updated successfully"){
-      this.router.navigate(['/']);
+      this.dialogRef.close([]);
+      this.reloadCurrentRoute();
     }
     },
     error: (error) => {
@@ -230,5 +273,61 @@ this.customerService.updateCustomer(customerId,this.customerUpdateForm.value).su
     alert('please fill required field') 
 
   }
+}
+
+onDocumentChange(selectedDocument: string) {
+   
+
+  switch (selectedDocument) {
+    case 'citizenship': {
+      this.customerUpdateForm.controls['citizenshipNumber'].setValidators([Validators.required]);
+      this.customerUpdateForm.controls['passportNumber'].reset();  
+      this.customerUpdateForm.controls['passportNumber'].setValidators(null);  
+              this.customerUpdateForm.controls['passportNumber'].updateValueAndValidity(); 
+      this.showCitizenshipFields=true;
+      this.showPassportFields=false;
+
+
+      break;
+    }
+    case 'passport': {
+      this.customerUpdateForm.controls['passportNumber'].setValidators([Validators.required]);
+            this.customerUpdateForm.controls['citizenshipNumber'].reset();
+            this.customerUpdateForm.controls['citizenshipNumber'].setValidators(null);
+            this.customerUpdateForm.controls['citizenshipNumber'].updateValueAndValidity();             
+
+      this.showPassportFields=true;
+      this.showCitizenshipFields=false;
+
+
+      break;
+    }
+   
+  }
+}
+onBranchChange(selectedBranch: string) {
+  let branchCode = '';
+  switch (selectedBranch) {
+    case 'branch1': {
+      branchCode = '11001290';
+      break;
+    }
+    case 'branch2': {
+      branchCode = '11001293';
+      break;
+    }
+    case 'branch3': {
+      branchCode = '11001300';
+      break;
+    }
+  }
+  console.log('called');
+  this.customerUpdateForm.get('branchCode')?.setValue(branchCode);
+}
+reloadCurrentRoute() {
+  let currentUrl = this.router.url;
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()  =>{
+      this.router.navigate([currentUrl]);
+  });
 }
 }

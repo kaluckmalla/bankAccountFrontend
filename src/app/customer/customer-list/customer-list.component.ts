@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import {  PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer } from 'src/app/class/customer';
 import { CustomerService } from 'src/app/services/customer.service';
-import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import { PaginationData } from 'src/app/class/pagination-data';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateCustomerComponent } from '../update-customer/update-customer.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
@@ -14,24 +16,34 @@ import { PaginationData } from 'src/app/class/pagination-data';
 
 
 export class CustomerListComponent { 
+  @ViewChild(MatSort) matSort! : MatSort;
 
    pageNumber: number;
    pageSize: number;
    totalCustomerNumber: number;
   customers: any;
-  displayedColumns = ["name","phone","email","nationality","branch","account","customerDetail"];
+  dataSource:MatTableDataSource<any>;
+  displayedColumns = ["serialNumber","name","phone","email","nationality","cifId","branch","account","customerDetail"];
   responseMessage: any;
-
   constructor(private customerService: CustomerService, 
-    private router: Router,
-    public activatedRoute: ActivatedRoute){    
+    public activatedRoute: ActivatedRoute, public dialog: MatDialog,private router: Router){    
   }
   ngOnInit(): void {
     this.pageNumber=0;
-   this.pageSize=3;
+   this.pageSize=10;
 
    this.getCustomers(); 
+   
   }
+  openUpdateCustomer(customerId:any): void {
+    this.dialog.open(UpdateCustomerComponent,{
+     width:'50%',
+     height:'100%',
+data:{custmerid: customerId}
+ 
+    });
+    
+   }
   getCustomers(){
     this.customerService.getAllCustomer(this.pageNumber,this.pageSize).subscribe(
       {
@@ -43,6 +55,9 @@ export class CustomerListComponent {
         else{
 
         this.customers=response['customer'];   
+        this.dataSource = new MatTableDataSource(this.customers);//for filter
+        this.dataSource.sort=this.matSort;//for sort
+
               this.totalCustomerNumber=response['totalCustomerNumber'],
         this.pageNumber=response['currentPageNumber']
 
@@ -66,6 +81,8 @@ export class CustomerListComponent {
 
 
   deleteCustomer(customerId: string){
+    alert('Deletion of customer is not good practice')
+    /*
     this.customerService.deleteOneCustomer(customerId).subscribe(
       {
         next: (response) => {
@@ -81,5 +98,21 @@ export class CustomerListComponent {
       }
     );
     
-  }
+  
+  */
+}
+
+filter(e: Event){
+  const value=(e.target as  HTMLInputElement).value;
+  this.dataSource.filter = value.trim().toLowerCase();
+}
+redirectByCifId(cifId: any){
+  if(cifId==null){
+  alert("Customer information id can't be empty")
+}
+else{
+  this.router.navigate(["/customer-detail-by-cifid/"+cifId])
+
+}
+}
 }

@@ -1,21 +1,13 @@
-<div *ngIf="activatedRoute.children.length === 0" class="container mb-3" >
-  <div class="d-flex justify-content-between">
-    <button mat-raised-button color="primary" routerLink="/add-customer" class="mat-button">
-      <mat-icon>add</mat-icon>
-      <span>Add Customer</span>
+  <div class="container mb-3" *ngIf="activatedRoute.children.length === 0">
+   <div class="row">
+    <div class="col-sm-6">
+    <button mat-raised-button color="primary"
+    (click)="openAddCustomer()">
+
+        <mat-icon>add</mat-icon>
+        <span>Add Customer</span>
     </button>
-    <div class="d-flex">
-      <mat-form-field appearance="outline" class="mb-0">
-        <mat-label>Customer Info ID</mat-label>
-        <input matInput [(ngModel)]="cifId" name="cifId" placeholder="Enter customer info ID" required
-          style="height: 20px;">
-        <mat-icon matSuffix>account_circle</mat-icon>
-        <mat-hint align="end">Required</mat-hint>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="redirectByCifId()" class="mat-button ms-3">
-        <mat-icon>search</mat-icon>
-        <span>Search</span>
-      </button>
     </div>
+     
   </div>
-</div>
+  </div>

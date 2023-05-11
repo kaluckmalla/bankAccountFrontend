@@ -3,19 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddCustomerAccountComponent } from './customer-account/add-customer-account/add-customer-account.component';
 import { CustomerAccountListComponent } from './customer-account/customer-account-list/customer-account-list.component';
 import { UpdateCustomerAccountComponent } from './customer-account/update-customer-account/update-customer-account.component';
-import { AddCustomerComponent } from './customer/add-customer/add-customer.component';
 import { CustomerByAccountNumberComponent } from './customer/customer-by-account-number/customer-by-account-number.component';
-import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
-import { UpdateCustomerComponent } from './customer/update-customer/update-customer.component';
 import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-cifid/customer-detail-by-cifid.component';
 
-const routes: Routes = [{path: 'add-customer',title: 'Add Customer',component: AddCustomerComponent},
-{path: 'update-customer/:customerId',title: 'Update Customer',component: UpdateCustomerComponent},
-{path: 'customer-list',title: 'Customer List',component: CustomerListComponent},{path: 'customer-detail/:customerId',title: 'Customer Details',component: CustomerDetailComponent},
-{path:'customer-account-list/:customerId',title: 'Customer Account List',component: CustomerAccountListComponent,
-children: [{path:'add-customer-account/:customerId',title: 'Add Customer Account',component: AddCustomerAccountComponent},
-{path: 'update-customer-account/:customerId/:customerAccountId',title: 'Update Customer Account',component: UpdateCustomerAccountComponent}]},
+const routes: Routes = [
+{path: 'customer-list',title: 'Customer List',component: CustomerListComponent},
+{path:'customer-account-list/:customerId',title: 'Customer Account List',component: CustomerAccountListComponent},
 {path: 'customer-by-account-number/:accountNumber',title: 'Customer Details By Account Number',component: CustomerByAccountNumberComponent},
 {path: 'customer-detail-by-cifid/:cifId',title: 'Customer Details By Customer Information Id',component: CustomerDetailByCifidComponent}
 

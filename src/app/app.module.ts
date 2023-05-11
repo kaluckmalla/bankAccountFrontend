@@ -14,10 +14,10 @@ import { MaterialModule } from './material/material.module';
 import { CustomerAccountListComponent } from './customer-account/customer-account-list/customer-account-list.component';
 import { AddCustomerAccountComponent } from './customer-account/add-customer-account/add-customer-account.component';
 import { UpdateCustomerAccountComponent } from './customer-account/update-customer-account/update-customer-account.component';
-import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CustomerByAccountNumberComponent } from './customer/customer-by-account-number/customer-by-account-number.component';
 import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-cifid/customer-detail-by-cifid.component';
+import { FullImageViewComponent } from './full-image-view/full-image-view.component';
 
 
 
@@ -32,10 +32,10 @@ import { CustomerDetailByCifidComponent } from './customer/customer-detail-by-ci
     CustomerAccountListComponent,
     AddCustomerAccountComponent,
     UpdateCustomerAccountComponent,
-CustomerDetailComponent,
 DashboardComponent,
 CustomerByAccountNumberComponent,
 CustomerDetailByCifidComponent,
+FullImageViewComponent,
   ],
   imports: [
     
