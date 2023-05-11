@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/class/address';
 import { AddressService } from 'src/app/services/address.service';
@@ -13,9 +14,12 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class AddCustomerComponent implements OnInit {
   maxDate = new Date();
-  passportCheckBox = false;
+  showCitizenshipFields = false;
+  showPassportFields = false;
+  sameAsPermanntCheckBox = false; 
+  
   submitted = false;
-  isCompleted = false;
+
   public permanentAddress!: Address[];
   permanentCountries: any;
   permanentStates: any;
@@ -28,19 +32,15 @@ export class AddCustomerComponent implements OnInit {
   temporaryMunicipalities: any;
 
   selectedCitizenshipFrontImg: any;
-  citizenshipFrontImgName: any;
   citizenshipFrontEncodedImg: any;
 
   selectedCitizenshipBackImg: any;
-  citizenshipBackImgName: any;
   citizenshipBackEncodedImg: any;
 
   selectedPassportImg: any;
-  passportImgName: any;
   passportEncodedImg: any;
 
   selectedProfileImg: any;
-  profileImgName: any;
   profileEncodedImg: any;
 
   customerForm = new FormGroup({
@@ -64,15 +64,12 @@ export class AddCustomerComponent implements OnInit {
     fatherName: new FormControl('', [Validators.required]),
     motherName: new FormControl('', [Validators.required]),
     grandFatherName: new FormControl('', [Validators.required]),
-    citizenshipNumber: new FormControl('', [Validators.required]),
+    documentType: new FormControl('', [Validators.required]),
+    citizenshipNumber: new FormControl(''),
 
-    citizenshipFrontImageName: new FormControl(''),
     citizenshipFrontEncodedImage: new FormControl(''),
-    citizenshipBackImageName: new FormControl(''),
     citizenshipBackEncodedImage: new FormControl(''),
-    passportImageName: new FormControl(''),
     passportEncodedImage: new FormControl(''),
-    profileImageName: new FormControl(''),
     profileEncodedImage: new FormControl(''),
 
     passportNumber: new FormControl(''),
@@ -82,8 +79,9 @@ export class AddCustomerComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private addressService: AddressService,
-    private router: Router
+    private router:Router,
+    private addressService: AddressService
+    ,public dialogRef: MatDialogRef<AddCustomerComponent>
   ) {}
   ngOnInit() {
     // called after the constructor and called  after the first ngOnChanges()
@@ -110,6 +108,10 @@ export class AddCustomerComponent implements OnInit {
     );
   }
   onChangePermanentAddress(e) {
+    this.sameAsPermanntCheckBox =  e.target.checked;
+
+    if( e.target.checked==true){
+  
     let countryId: any = this.customerForm.value.permanentCountryId;
     let statesId: any = this.customerForm.value.permanentStatesId;
     this.onChangeTemporaryState(statesId);
@@ -124,6 +126,24 @@ export class AddCustomerComponent implements OnInit {
       .get('temporaryMunicipalitiesId')
       ?.setValue(municipalitiesId);
     e.preventDefault();
+    }
+    else{
+  
+      let countryId: any = this.customerForm.value.permanentCountryId;
+      let statesId: any = this.customerForm.value.permanentStatesId;
+      this.onChangeTemporaryState(statesId);
+      let districtsId: any = this.customerForm.value.permanentDistrictsId;
+      this.onChangeTemporaryDistrict(districtsId);
+      let municipalitiesId: any =
+        this.customerForm.value.permanentMunicipalitiesId;
+      this.customerForm.get('temporaryCountryId')?.setValue(null);
+      this.customerForm.get('temporaryStatesId')?.setValue(null);
+      this.customerForm.get('temporaryDistrictsId')?.setValue(null);
+      this.customerForm
+        .get('temporaryMunicipalitiesId')
+        ?.setValue(null);
+      e.preventDefault();
+      }
   }
   onChangePermanentCountry(countryId: any) {
     if (countryId) {
@@ -183,47 +203,36 @@ export class AddCustomerComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    this.isCompleted = true;
 
-    this.customerForm.controls['citizenshipFrontImageName'].setValue(
-      this.citizenshipFrontImgName
-    );
+    
     var cfeiImg = this.customerForm.controls['citizenshipFrontEncodedImage'];
     cfeiImg.setValue(this.citizenshipFrontEncodedImg);
 
-    this.customerForm.controls['citizenshipBackImageName'].setValue(
-      this.citizenshipBackImgName
-    );
+    
     var cbeiImg = this.customerForm.controls['citizenshipBackEncodedImage'];
     cbeiImg.setValue(this.citizenshipBackEncodedImg);
 
-    this.customerForm.controls['passportImageName'].setValue(
-      this.passportImgName
-    );
+ 
     var pImg = this.customerForm.controls['passportEncodedImage'];
     pImg.setValue(this.passportEncodedImg);
 
-    this.customerForm.controls['profileImageName'].setValue(
-      this.profileImgName
-    );
+   
     var prImg = this.customerForm.controls['profileEncodedImage'];
     prImg.setValue(this.profileEncodedImg);
 
     if (this.customerForm.valid) {
+      console.log(this.customerForm.value)
       this.customerService.save(this.customerForm.value).subscribe({
         next: (response) => {
-          if (response) {
-            this.isCompleted = false;
-          }
+        
           alert('Response from api : ' + response['message']);
           if (response['message'] === 'Customer added successfully') {
-            this.router.navigate(['/']);
-
-            //reseting validators
+            
+            this.dialogRef.close([]);
+            this.reloadCurrentRoute();
           }
         },
         error: (error) => {
-          this.isCompleted = false;
 
           alert('Error occor : ' + error['message']);
         },
@@ -238,7 +247,6 @@ export class AddCustomerComponent implements OnInit {
     var files = event.target.files;
     this.selectedCitizenshipFrontImg = event.target.files;
     var file = files[0];
-    this.citizenshipFrontImgName = files[0].name;
 
     if (files && file) {
       var reader = new FileReader();
@@ -258,7 +266,6 @@ export class AddCustomerComponent implements OnInit {
     var files = event.target.files;
     this.selectedCitizenshipBackImg = event.target.files;
     var file = files[0];
-    this.citizenshipBackImgName = files[0].name;
 
     if (files && file) {
       var reader = new FileReader();
@@ -277,7 +284,6 @@ export class AddCustomerComponent implements OnInit {
     var files = event.target.files;
     this.selectedPassportImg = event.target.files;
     var file = files[0];
-    this.passportImgName = files[0].name;
 
     if (files && file) {
       var reader = new FileReader();
@@ -296,7 +302,6 @@ export class AddCustomerComponent implements OnInit {
     var files = event.target.files;
     this.selectedProfileImg = event.target.files;
     var file = files[0];
-    this.profileImgName = files[0].name;
 
     if (files && file) {
       var reader = new FileReader();
@@ -310,12 +315,45 @@ export class AddCustomerComponent implements OnInit {
     var binaryString = event.target.result;
     this.profileEncodedImg = window.btoa(binaryString);
   }
-  //when clicked on checked box
 
-  passportCheckBoxFunction = (event) => {
-    this.passportCheckBox = event.target.checked;
-  };
 
+  onDocumentChange(selectedDocument: string) {
+   
+
+    switch (selectedDocument) {
+      case 'citizenship': {
+    
+        this.customerForm.controls['citizenshipNumber'].setValidators([Validators.required]);
+        this.customerForm.controls['passportNumber'].reset();  
+        this.customerForm.controls['passportNumber'].setValidators(null);  
+        this.passportEncodedImg=null;
+                this.customerForm.controls['passportNumber'].updateValueAndValidity(); 
+        this.selectedPassportImg=false; 
+        this.showCitizenshipFields=true;
+        this.showPassportFields=false;
+  
+  
+        break;
+      }
+      case 'passport': {
+        this.customerForm.controls['passportNumber'].setValidators([Validators.required]);
+              this.customerForm.controls['citizenshipNumber'].reset();
+              this.customerForm.controls['citizenshipNumber'].setValidators(null);
+              this.citizenshipFrontEncodedImg=null;
+              this.citizenshipBackEncodedImg=null;
+              this.customerForm.controls['citizenshipNumber'].updateValueAndValidity();  
+              this.selectedCitizenshipFrontImg=false; 
+              this.selectedCitizenshipBackImg=false; 
+
+        this.showPassportFields=true;
+        this.showCitizenshipFields=false;
+
+        break;
+      }
+     
+    }
+  }
+  
   onBranchChange(selectedBranch: string) {
     let branchCode = '';
     switch (selectedBranch) {
@@ -332,7 +370,12 @@ export class AddCustomerComponent implements OnInit {
         break;
       }
     }
-    console.log('called');
     this.customerForm.get('branchCode')?.setValue(branchCode);
+  }
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()  =>{
+        this.router.navigate([currentUrl]);
+    });
   }
 }

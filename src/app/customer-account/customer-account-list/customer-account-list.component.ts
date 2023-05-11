@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccount } from 'src/app/class/customer-account';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
+import { AddCustomerAccountComponent } from '../add-customer-account/add-customer-account.component';
+import { UpdateCustomerAccountComponent } from '../update-customer-account/update-customer-account.component';
 
 @Component({
   selector: 'app-customer-account-list',
@@ -9,6 +12,9 @@ import { CustomerAccountService } from 'src/app/services/customer-account.servic
   styleUrls: ['./customer-account-list.component.css'],
 })
 export class CustomerAccountListComponent implements OnInit {
+  static ngOnInit() {
+    throw new Error('Method not implemented.');
+  }
   customerId: any;
   customerAccounts: CustomerAccount[]; //for getting array of object i.e. customer-accounts
   displayedColumns = [
@@ -23,12 +29,29 @@ export class CustomerAccountListComponent implements OnInit {
 
   constructor(
     private customerAccountService: CustomerAccountService,
-    public activatedRoute: ActivatedRoute,
-    private router: Router
+    public activatedRoute: ActivatedRoute,public dialog: MatDialog 
   ) {}
   ngOnInit(): void {
     this.getCustomerAccounts();
   }
+  openAddCustomerAccount(customerId: any): void {
+    this.dialog.open(AddCustomerAccountComponent,{
+     width:'50%',
+     height:'29.4%',
+     data:{customerid: customerId}
+ 
+    });
+    
+   }
+   openUpdateCustomerAccount(customerId:any,customerAccountId:any): void {
+    this.dialog.open(UpdateCustomerAccountComponent,{
+     width:'50%',
+     height:'32%',
+data:{custmerid: customerId,customeraccountid:customerAccountId}
+ 
+    });
+    
+   }
   getCustomerAccounts() {
     this.customerId = this.activatedRoute.snapshot.params['customerId'];
 
@@ -45,5 +68,8 @@ export class CustomerAccountListComponent implements OnInit {
       },
       complete: () => {},
     });
+  }
+  deleteCustomerAccount(){
+    alert('Deletion of customer account is not good practice')
   }
 }

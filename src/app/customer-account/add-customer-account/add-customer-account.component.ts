@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component,  Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
-import { Location } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,17 +18,17 @@ export class AddCustomerAccountComponent implements OnInit{
     currentBalance: new FormControl('',[Validators.required,Validators.min(1000),Validators.max(1000000000)]),
    
   });
-  
-
-  constructor(private customerAccountService: CustomerAccountService , private activatedRoute: ActivatedRoute,private location: Location){
-
+ 
+  constructor(private customerAccountService: CustomerAccountService,private router: Router ,@Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<AddCustomerAccountComponent>){
+    this.customerId=data.customerid;
   }
   ngOnInit(): void {
+
   }
   onSubmit(){
 
     if(this.customerAccountForm.valid){
-      this.customerId = this.activatedRoute.snapshot.params['customerId'];
+     
 
       this.customerAccountService.save(this.customerId ,this.customerAccountForm.value).subscribe( 
         {
@@ -36,8 +36,9 @@ export class AddCustomerAccountComponent implements OnInit{
            alert('Response from api : '+response['message'])         
            
            if(response['message'] === this.customerAccountForm.controls['accountType'].value+" account created successfully"){
-            this.location.back();
-
+            this.dialogRef.close([]);
+         this.reloadCurrentRoute()
+           
           }
           },
           error: (error) => {
@@ -56,4 +57,10 @@ export class AddCustomerAccountComponent implements OnInit{
 
   }
 
+reloadCurrentRoute() {
+  let currentUrl = this.router.url;
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()  =>{
+      this.router.navigate([currentUrl]);
+  });
+}
 }

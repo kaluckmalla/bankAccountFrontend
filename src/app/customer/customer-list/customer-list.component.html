@@ -1,10 +1,23 @@
 <router-outlet></router-outlet>
 
-<div *ngIf="activatedRoute.children.length === 0" style="width: 80%; margin-left: auto; margin-right: auto;">
-  <h2 class="p-3 mb-2 bg-info text-white text-center mb-0">Customer List</h2>
-  <mat-table class="customer-table  mat-elevation-z8" [dataSource]="customers">
+
+
+<div class=" mb-3" *ngIf="activatedRoute.children.length === 0" style="width: 95%; margin-left: auto; margin-right: auto;" >
+  <div class="text-end">
+  <mat-form-field appearance="outline"  >
+    <mat-label>Search customer</mat-label>
+    <input matInput   (keyup)="filter($event)">
+  </mat-form-field>
+</div>
+  <h2 class="p-3 mb-2  text-center bg-primary text-white">Customer List</h2>
+
+  <table mat-table matSort class="customer-table  mat-elevation-z8" [dataSource]="dataSource" *ngIf="customers">
+    <ng-container  matColumnDef="serialNumber">
+      <mat-header-cell class="text-break" *matHeaderCellDef>S.N.</mat-header-cell>>
+      <mat-cell class="text-break" *matCellDef="let customer">{{customers.indexOf(customer)+1}}</mat-cell>>
+    </ng-container>
     <ng-container matColumnDef="name">
-      <mat-header-cell class="text-break" *matHeaderCellDef>Name</mat-header-cell>>
+      <mat-header-cell  mat-sort-header class="text-break" *matHeaderCellDef>Name</mat-header-cell>>
       <mat-cell class="text-break" *matCellDef="let customer">{{customer.name}}</mat-cell>>
     </ng-container>
     <ng-container matColumnDef="phone">
@@ -19,6 +32,10 @@
       <mat-header-cell class="text-break" *matHeaderCellDef>Nationality</mat-header-cell>>
       <mat-cell class="text-break" *matCellDef="let customer">{{customer.nationality}}</mat-cell>>
     </ng-container>
+    <ng-container matColumnDef="cifId">
+      <mat-header-cell class="text-break" *matHeaderCellDef>CIF Id</mat-header-cell>>
+      <mat-cell class="text-break" *matCellDef="let customer">{{customer.cifId}}</mat-cell>>
+    </ng-container>
 
     <ng-container matColumnDef="branch">
       <mat-header-cell class="text-break" *matHeaderCellDef>Branch</mat-header-cell>>
@@ -30,32 +47,35 @@
         <button class="btn bg-secondary text-white"
           routerLink="customer-account-list/{{customer.customerId}}">
           <mat-icon>account_circle</mat-icon>
-        </button>
+        </button>        
       </mat-cell>
     </ng-container>    
     <ng-container matColumnDef="customerDetail">
-      <mat-header-cell class="text-break" *matHeaderCellDef>Details</mat-header-cell>>
+      <mat-header-cell  *matHeaderCellDef>Action</mat-header-cell>>
       <mat-cell *matCellDef="let customer">
-        <a routerLink="customer-detail/{{customer.customerId}}">
-          <button mat-icon-button color="primary">
-            <mat-icon>visibility</mat-icon>
+        <div>
+          <button mat-icon-button class="text-primary " (click)="redirectByCifId(customer.cifId)">
+            <mat-icon >visibility</mat-icon>
           </button>
-        </a>
-        <button mat-icon-button color="primary" routerLink="update-customer/{{customer.customerId}}">
+        <button mat-icon-button class="text-success "  (click)="openUpdateCustomer(customer.customerId)">
           <mat-icon>edit</mat-icon>
         </button>
+        <button mat-icon-button class="text-danger " (click)="deleteCustomer(customer.customerId)">
+          <mat-icon>delete</mat-icon>
+      </button>
+      </div>
       </mat-cell>
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: lightgray;"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[ 3,6, 9,12,15]" [pageIndex]="pageNumber" [length]="totalCustomerNumber"
+  </table>
+  <mat-paginator [pageSizeOptions]="[ 10,20, 30,50,100]" [pageIndex]="pageNumber" [length]="totalCustomerNumber"
     [pageSize]="pageSize" (page)="handlePageEvent($event)" showFirstLastButtons>
 
   </mat-paginator>
 
-  <mat-label class="text-danger bg-warning">{{responseMessage}}</mat-label>
+  <mat-label class="text-danger">{{responseMessage}}</mat-label>
 
 </div>

@@ -14,6 +14,7 @@ nationality:string;
 fatherName:string;
 motherName:string;
 grandFatherName:string;
+documentType: string;
 citizenshipNumber:string;
 passportNumber:string;
 cifId:string;

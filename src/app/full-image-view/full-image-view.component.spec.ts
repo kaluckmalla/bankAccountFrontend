@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomerDetailComponent } from './customer-detail.component';
+import { FullImageViewComponent } from './full-image-view.component';
 
-describe('CustomerDetailComponent', () => {
-  let component: CustomerDetailComponent;
-  let fixture: ComponentFixture<CustomerDetailComponent>;
+describe('FullImageViewComponent', () => {
+  let component: FullImageViewComponent;
+  let fixture: ComponentFixture<FullImageViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomerDetailComponent ]
+      declarations: [ FullImageViewComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CustomerDetailComponent);
+    fixture = TestBed.createComponent(FullImageViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

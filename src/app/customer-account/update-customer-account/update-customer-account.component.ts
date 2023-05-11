@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccountService } from 'src/app/services/customer-account.service';
-import { Location } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -21,7 +21,10 @@ currentBalance: new FormControl('',[Validators.required,Validators.min(1000),Val
 accountNumber: new FormControl('',[Validators.required])
   });
   
-  constructor(private customerAccountService: CustomerAccountService,private activatedRoute: ActivatedRoute, private router: Router,private location: Location){
+  constructor(private customerAccountService: CustomerAccountService,private router: Router, @Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<UpdateCustomerAccountComponent>){
+    this.customerId = data.custmerid;
+
+    this.customerAccountId = data.customeraccountid;
 
   }
   ngOnInit(): void {
@@ -30,10 +33,7 @@ accountNumber: new FormControl('',[Validators.required])
 
   }
   getCustomerSpecificAccount() {
-    this.customerId = this.activatedRoute.snapshot.params['customerId'];
-
-    this.customerAccountId = this.activatedRoute.snapshot.params['customerAccountId'];
-
+  
 
     this.customerAccountService.getSpecificAccount(this.customerId,this.customerAccountId).subscribe(
        {
@@ -68,7 +68,8 @@ this.customerAccountService.updateAccount(customerId,customerAccountId,this.cust
     next: (response) => {        
      alert('Response from api : '+response['message'])
      if(response['message'] === "Customer account updated successfully"){
-      this.location.back();
+      this.dialogRef.close([]);
+      this.reloadCurrentRoute()
     }
     },
     error: (error) => {
@@ -85,5 +86,10 @@ this.customerAccountService.updateAccount(customerId,customerAccountId,this.cust
 
   }
 }
-
+reloadCurrentRoute() {
+  let currentUrl = this.router.url;
+  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()  =>{
+      this.router.navigate([currentUrl]);
+  });
+}
 }
